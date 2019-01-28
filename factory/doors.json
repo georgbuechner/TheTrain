@@ -1,0 +1,6 @@
+{
+{"name":"Abteil-Flur", "from":0, "to":1, "descriptions":["Abteil-Flur1.txt"]},
+{"name":"Flur-Abteil", "from":1, "to":0, "descriptions":["Flur-Abteil1.txt"]}
+}
+
+
