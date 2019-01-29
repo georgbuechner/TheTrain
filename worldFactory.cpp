@@ -36,6 +36,28 @@ std::map<size_t, CDoor*>* CGame::doorFactory(nlohmann::json j_listDoors)
     return mapDoors;
 }
 
+std::map<std::string, CCharacter*>* CGame::characterFactory(nlohmann::json j_listCharacters)
+{
+    //Create empty map of doors
+    std::map<std::string, CCharacter*>* mapCharacters= new std::map<std::string, CCharacter*>;
+
+    //Iterate over all doors and create each person
+    for(size_t it = 0; it<j_listCharacters.size(); it++)
+    {
+        //Create a new json for current person
+        nlohmann::json j_Character= j_listCharacters[it];
+
+        //Create person
+        std::string sName   = j_Character["name"];
+        std::string sID     = j_Character["id"];
+        CCharacter* character = new CCharacter(sName, sID);
+
+        mapCharacters->insert(std::pair<std::string, CCharacter*>(sID, character));
+    }
+
+    return mapCharacters;
+}
+
 //Parse room and return map of all parsed rooms
 std::map<std::string, CRoom*>* CGame::roomFactory(std::string sPath)
 {
@@ -66,13 +88,17 @@ std::map<std::string, CRoom*>* CGame::roomFactory(std::string sPath)
         //Create a new json for current room
         nlohmann::json j_room=listRooms[it];
 
-        std::vector<nlohmann::json> j_listDoors = j_room["exits"];
 
-        //Create empty map of doors 
+        //Create all doors and store in map of doors
+        std::vector<nlohmann::json> j_listDoors = j_room["exits"];
         std::map<size_t, CDoor*>* mapDoors = doorFactory(j_listDoors);
+
+        //Create all people and store in map of people
+        std::vector<nlohmann::json> j_listCharacters= j_room["characters"];
+        std::map<std::string, CCharacter*>* mapCharacters= characterFactory(j_listCharacters);
     
         //Create room
-        CRoom* room = new CRoom(j_room["name"], mapDoors);
+        CRoom* room = new CRoom(j_room["name"], mapDoors, mapCharacters);
 
         //Add room to map of all rooms
         mapRooms->insert(std::pair<std::string, CRoom*>(j_room["id"], room));

@@ -2,23 +2,38 @@
 
 
 {"name":"Abteil - A", "id":"abteil_a", 
-    "exits": [ {"name":"abteil_a-flur", "to":"flur", "descriptions":["abteil-flur1.txt"]} ]
+    "exits":  [ {"name":"abteil_a-flur", "to":"flur", "descriptions":["abteil-flur1.txt"]} ],
+    "characters": [ {"name":"Alter Mann", "id":"alter_mann"} ]
 },
 
 {"name":"Abteil - B", "id":"abteil_b", 
-    "exits": [ {"name":"abteil_b-flur", "to":"flur", "descriptions":["abteil-flur1.txt"]} ]
+    "exits":  [ {"name":"abteil_b-flur", "to":"flur", "descriptions":["abteil-flur1.txt"]} ],
+    "characters": [ {"name":"Jay", "id":"jay"} ]
 },
 
 {"name":"Abteil - C", "id":"abteil_c", 
-    "exits": [ {"name":"abteil_c-flur", "to":"flur", "descriptions":["abteil-flur1.txt"]} ]
+    "exits":  [ {"name":"abteil_c-flur", "to":"flur", "descriptions":["abteil-flur1.txt"]} ],
+    "characters": [ {"name":"Parsen Rogochin", "id":"parsen_rogochin"} ]
 },
 
 {"name":"Abteil - D", "id":"abteil_d", 
-    "exits": [{"name":"abteil_d-flur", "to":"flur", "descriptions":["abteil-flur1.txt"]} ]
+    "exits": [ {"name":"abteil_d-flur", "to":"flur", "descriptions":["abteil-flur1.txt"]} ],
+    "characters":
+    [
+        {"name":"Mutter", "id":"mutter"},
+        {"name":"Kind1", "id":"kind1"},
+        {"name":"Kind2", "id":"kind2"}
+    ]
 },
 
 {"name":"Abteil - E", "id":"abteil_e", 
-    "exits": [{"name":"abteil_e-flur", "to":"flur", "descriptions":["abteil-flur1.txt"]} ]
+    "exits": [ {"name":"abteil_e-flur", "to":"flur", "descriptions":["abteil-flur1.txt"]} ],
+    "characters":
+    [
+        {"name":"Der General", "id":"der_general"},
+        {"name":"Eine Damen in pink", "id":"eine_dame_in_pink"},
+        {"name":"Eine weiter Dame in pink", "id":"eine_weitere_dame_in_pink"}
+    ]
 },
 
 {"name":"Flur", "id": "flur",
@@ -29,7 +44,8 @@
         {"name":"flur-abteil_c", "to":"abteil_c", "descriptions":["flur-abteil_c1.txt"]}, 
         {"name":"flur-abteil_d", "to":"abteil_d", "descriptions":["flur-abteil_d1.txt"]}, 
         {"name":"flur-abteil_e", "to":"abteil_e", "descriptions":["flur-abteil_e1.txt"]} 
-    ]
+    ],
+    "characters": []
 }
 
 
