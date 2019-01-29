@@ -5,7 +5,7 @@
 void CGame::worldFactory()
 {
     //***** Create Rooms *****//
-    roomFactory("factory/rooms.json");
+    m_mapAllRooms = roomFactory("factory/rooms.json");
 
     std::cout << "Parsing complete! \n";
 
@@ -36,7 +36,8 @@ std::map<size_t, CDoor*>* CGame::doorFactory(nlohmann::json j_listDoors)
     return mapDoors;
 }
 
-void CGame::roomFactory(std::string sPath)
+//Parse room and return map of all parsed rooms
+std::map<std::string, CRoom*>* CGame::roomFactory(std::string sPath)
 {
     //Read json creating all rooms
     std::ifstream read(sPath);
@@ -45,7 +46,7 @@ void CGame::roomFactory(std::string sPath)
     if(!read)
     {
         std::cout << "Error reading " << sPath << ".\n";
-        return;
+        return NULL;
     }
 
     //Load data into a json
@@ -55,6 +56,9 @@ void CGame::roomFactory(std::string sPath)
     
     //Create a vector of all json objects (all rooms)
     std::vector<nlohmann::json> listRooms = j_listRooms;
+
+    //Create empty map of rooms
+    std::map<std::string, CRoom*>* mapRooms = new std::map<std::string, CRoom*>;
 
     //Iterate over all rooms and create each room
     for(size_t it = 0; it < listRooms.size(); it++)
@@ -71,10 +75,12 @@ void CGame::roomFactory(std::string sPath)
         CRoom* room = new CRoom(j_room["name"], mapDoors);
 
         //Add room to map of all rooms
-        m_mapAllRooms->insert(std::pair<std::string, CRoom*>(j_room["id"], room));
+        mapRooms->insert(std::pair<std::string, CRoom*>(j_room["id"], room));
 
         std::cout << j_room["name"] << " parsed successfully! \n";
     }
+
+    return mapRooms;
 }
         
     

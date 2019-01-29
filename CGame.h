@@ -25,8 +25,8 @@ public:
 
     //Word factory and factorys
     void worldFactory();
-    void roomFactory(std::string sPath);
-    std::map<size_t, CDoor*>* doorFactory(nlohmann::json j_listDoors);
+    std::map<std::string, CRoom*>*  roomFactory(std::string sPath);
+    std::map<size_t, CDoor*>*       doorFactory(nlohmann::json j_listDoors);
 
 
     void play();    

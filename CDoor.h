@@ -107,7 +107,7 @@ void CDoor::printDescription()
         while(!read.eof())
         {
             getline(read, sBuffer);
-            std::cout << sBuffer;    
+            std::cout << sBuffer << "\n";
         }
     }
         //sDescription.assign((istreambuf_iterator<char>(ifs)), (istreambuf_iterator<char>()));
