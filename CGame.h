@@ -4,10 +4,12 @@
 #define CGAME_H
 
 #include <iostream>
+#include <list>
 #include <map>
 #include "CDoor.h"
 #include "CRoom.h"
 #include "CPlayer.h"
+#include "json.hpp"
 
 class CGame
 {
@@ -25,9 +27,9 @@ public:
 
     //Word factory and factorys
     void worldFactory();
-    CRoom* roomFactory(std::string sName, size_t num);
-    void doorFactory(std::string Name, CRoom* fromRoom, CRoom* toRoom,
-            std::vector<std::string> sDescription, void(CDoor::*callDescription)(), size_t num);
+    void roomFactory(std::string sPath);
+    void doorFactory(std::string sPath);
+
 
     void play();    
 };

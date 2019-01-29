@@ -1,4 +1,5 @@
-{
-{"room":"Abteil"}, 
-{"room":"Flur"}
-}
+[
+    {"name":"Abteil"}, 
+    {"name":"Flur"}
+]
+

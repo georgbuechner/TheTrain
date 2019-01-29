@@ -9,7 +9,7 @@ void CGame::play()
 
     worldFactory();
 
-    std::cout << m_Player->getName() << " befindet sich in " << m_Player->getCurRoom() << ".\n";
+    std::cout << m_Player->getName() << " befindet sich in " << m_Player->getCurRoom()->getName()<< ".\n";
 
 
     do
