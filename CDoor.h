@@ -9,14 +9,11 @@
 #include <vector>
 #include <fstream>
 
-//Forward declarations:
-class CRoom;
-
 class CDoor
 {
 private:
     std::string m_sName;    //Name of the Door (can be changed during the game)
-    CRoom* m_linkedRoom;    //Room the door is leading to
+    std::string m_sLinkedRoom;      //ID from room the door is leading to
 
     int m_curDescription;                       //Marks current discription 
     std::vector<std::string> m_sDescriptions;   //String array of all descriptions
@@ -26,7 +23,7 @@ private:
                                             //room and gives various other possibilities
 public:
     //Constructor
-    CDoor(std::string sName, CRoom* linkedRoom, std::vector<std::string> sDescription, 
+    CDoor(std::string sName, std::string linkedRoom, std::vector<std::string> sDescription, 
             void(CDoor::*callDescription)());
 
     //Getter
@@ -36,11 +33,10 @@ public:
         return m_sName;
     }
 
-    //Get the room the door is leading to
-    CRoom* getLinkedRoom() {
-        return m_linkedRoom;
+    //Get ID of the room the door is leading to
+    std::string getLinkedRoom() {
+        return m_sLinkedRoom;
     }
-
     
     //Setter
 
@@ -74,11 +70,11 @@ public:
 //Constructor: 
 //chName (name of he door), linkedRoom (Room this door is leading to), 
 //localID (ID to clearly identify all doors in a room), ID (ID to clearly identify this door out of all doors)
-CDoor::CDoor(std::string sName, CRoom* linkedRoom, std::vector<std::string> sDescriptions, 
+CDoor::CDoor(std::string sName, std::string sLinkedRoom, std::vector<std::string> sDescriptions, 
                 void(CDoor::*callDescription)())
 {
     m_sName = sName;
-    m_linkedRoom = linkedRoom;
+    m_sLinkedRoom = sLinkedRoom;
     
     m_curDescription = 0;
     for(unsigned int i=0; i<sDescriptions.size(); i++)

@@ -54,7 +54,7 @@ void CGame::play()
                 if(wahl <= counter)
                 {
                     CDoor* door = mapDoors->at(wahl-1);
-                    m_Player->setCurRoom(door->getLinkedRoom());
+                    m_Player->setCurRoom(m_mapAllRooms->at(door->getLinkedRoom()));
                     door->callDesc();
                 }
 
