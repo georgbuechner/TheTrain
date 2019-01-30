@@ -4,6 +4,9 @@
 
 void CGame::worldFactory()
 {
+
+    dialogFactory("factory/dialogs.json");
+
     //***** Create Rooms *****//
     m_mapAllRooms = roomFactory("factory/rooms.json");
 
@@ -108,6 +111,63 @@ std::map<std::string, CRoom*>* CGame::roomFactory(std::string sPath)
 
     return mapRooms;
 }
-        
+
+void CGame::dialogFactory(std::string sPath)
+{
+    std::ifstream read(sPath);
     
+    if(!read)
+    {
+        std::cout << "Opening " << sPath << "failed. \n";
+        return;
+    }
+
+    //Load data into json
+    nlohmann::json j_dialog;
+    read >> j_dialog;
+    read.close();
+
+    //Create vector with all states of dialog.
+    std::vector<nlohmann::json> v_states = j_dialog;
+    
+    //Create map
+    std::map<size_t, nlohmann::json> mapStates;
+    for(size_t it=0; it<v_states; it++)
+    {
+        nlohmann::json fooState = v_states[it];
+        mapStates.insert(std::pair<size_t, nlohmann::json>(fooState["id"], fooState));
+    }
+
+    size_t wahl = 0;
+    size_t index = 0;
+    for(;;)
+    {
+        nlohmann::json j_state = mapStates.at(index);
+
+        std::cout << j_state["speaker"] << "  " << j_state["text"] << "\n";
+        if(j_state["option"] == 1)
+        {
+            std::vector<size_t> v_stateOptions = j_state["link"];
+            for(size_t it=0; it<v_stateOptions.size(); it++)
+            {
+                nlohmann::json j_fooState = v_states[v_stateOptions[it]];
+                std::cout << it+1 << ": " << j_fooState["text"] << "\n";
+            }
+            std::cout << ">"; cin>>wahl; 
+
+            if(wahl<v_stateOptions.size())
+                index = v_stateOptions[wahl];
+            else
+                std::cout << "Wrong input!\n";
+        }
+        
+        else
+            index = j_state["link"];
+    }
+}
+            
+         
+    
+        
+
     

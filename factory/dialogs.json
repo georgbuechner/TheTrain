@@ -1,0 +1,18 @@
+[
+    {"id":0, "text":"Started talking to Parsen Rogochin.", "option":1, "link":[1, 2]},
+    
+    {"id":1, "text":"Hallo, wie geht es dir?", "speaking":"PLAYER", "option":0, "link":11},
+    {"id":11, "text":"Hallo, mir geht es gut, danke der Nachfrage.", "speaking":"PARSEN", "option":0, "link":0},
+
+    {"id":2, "text":"Wer bist du?", "speaking":"PLAYER", "option":0, "link":21},
+    {"id":21, "text":"Parsen. Und du?", "speaking":"PARSEN", "option":1, "link":[211, 212]},
+
+        {"id":211, "text":"Das geht dich gar nichts an!", "speaking":"PLAYER", "option":0, "link":2111},
+        {"id":2111, "text":"Parsen schweigt.", "speaking":"PARSEN", "option":0, "link":0},
+
+        {"id":212, "text":"PLAYER: Ich bin Jan.", "speaking":"PLAYER", "option":0, "link":2121},
+        {"id":2121, "text":"PARSEN: Sehr erfreut. Aber ich werde jetzt weiter in meinem Buch lesen", "speaking":"PARSEN", "option":0, "link":0}
+]
+        
+        
+        

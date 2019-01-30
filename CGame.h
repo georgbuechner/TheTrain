@@ -29,6 +29,8 @@ public:
     std::map<size_t, CDoor*>*           doorFactory(nlohmann::json j_listDoors);
     std::map<std::string, CCharacter*>* characterFactory(nlohmann::json j_listCharacters);   
 
+    void dialogFactory(std::string sPath);
+
 
     void play();    
 };
