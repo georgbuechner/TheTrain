@@ -4,9 +4,6 @@
 
 void CGame::worldFactory()
 {
-
-    dialogFactory("factory/dialogs.json");
-
     //***** Create Rooms *****//
     m_mapAllRooms = roomFactory("factory/rooms.json");
 
@@ -16,6 +13,12 @@ void CGame::worldFactory()
     m_Player = new CPlayer("Nikolaija", m_mapAllRooms->at("abteil_c")); 
 }
 
+
+/**  doorFactory
+* Function parsing doors of a room from json
+* @parameter nlohmann::json     (json from which to create map of door 
+* @return map<size_t, CDoor*>   (map of parsed doors) 
+*/
 std::map<size_t, CDoor*>* CGame::doorFactory(nlohmann::json j_listDoors)
 {
     //Create empty map of doors
@@ -30,8 +33,12 @@ std::map<size_t, CDoor*>* CGame::doorFactory(nlohmann::json j_listDoors)
         //Create door 
         std::string sName   = j_door["name"];
         std::string sToRoom = j_door["to"];
-        std::vector<std::string> sDescriptions = j_door["descriptions"];
-        CDoor* door = new CDoor(sName, sToRoom, sDescriptions, &CDoor::DescCall_Standard); 
+
+        std::string sHeadDesc = j_door.value("headDescription", "");
+        std::string sFootDesc = j_door.value("footDescription", "");
+        std::string sAltDesc  = j_door.value("altDescription", "");
+        
+        CDoor* door = new CDoor(sName, sToRoom, sHeadDesc, sFootDesc, sAltDesc);
 
         mapDoors->insert(std::pair<size_t, CDoor*>(it, door)); 
     }
@@ -39,6 +46,11 @@ std::map<size_t, CDoor*>* CGame::doorFactory(nlohmann::json j_listDoors)
     return mapDoors;
 }
 
+/**  characterFactory
+* Function parsing characters of a room from json
+* @parameter nlohmann::json     (json from which to create map of characters 
+* @return map<size_t, CCharacter*>   (map of parsed characters) 
+*/
 std::map<std::string, CCharacter*>* CGame::characterFactory(nlohmann::json j_listCharacters)
 {
     //Create empty map of doors
@@ -53,7 +65,9 @@ std::map<std::string, CCharacter*>* CGame::characterFactory(nlohmann::json j_lis
         //Create person
         std::string sName   = j_Character["name"];
         std::string sID     = j_Character["id"];
-        CCharacter* character = new CCharacter(sName, sID);
+        CDialog* dialog     = dialogFactory(j_Character.value("dialog", "factory/defaultDialog.json"));
+
+        CCharacter* character = new CCharacter(sName, sID, dialog);
 
         mapCharacters->insert(std::pair<std::string, CCharacter*>(sID, character));
     }
@@ -61,7 +75,11 @@ std::map<std::string, CCharacter*>* CGame::characterFactory(nlohmann::json j_lis
     return mapCharacters;
 }
 
-//Parse room and return map of all parsed rooms
+/** roomFactory
+* Function parsing all rooms (including door, characters etc. in this room) from a json
+* @parameter nlohmann::json     (json from which to create map of rooms 
+* @return map<size_t, CRoom*>   (map of parsed rooms) 
+*/
 std::map<std::string, CRoom*>* CGame::roomFactory(std::string sPath)
 {
     //Read json creating all rooms
@@ -101,7 +119,7 @@ std::map<std::string, CRoom*>* CGame::roomFactory(std::string sPath)
         std::map<std::string, CCharacter*>* mapCharacters= characterFactory(j_listCharacters);
     
         //Create room
-        CRoom* room = new CRoom(j_room["name"], mapDoors, mapCharacters);
+        CRoom* room = new CRoom(j_room["name"], j_room["description"], mapDoors, mapCharacters);
 
         //Add room to map of all rooms
         mapRooms->insert(std::pair<std::string, CRoom*>(j_room["id"], room));
@@ -112,14 +130,19 @@ std::map<std::string, CRoom*>* CGame::roomFactory(std::string sPath)
     return mapRooms;
 }
 
-void CGame::dialogFactory(std::string sPath)
+/** dialogFactory
+* Function parsing a dialog of a character (called in "characterFactory")
+* @parameter string             (path to json from which to create dialog)
+* @return CDialog* (map of parsed rooms) 
+*/
+CDialog* CGame::dialogFactory(std::string sPath)
 {
     std::ifstream read(sPath);
     
     if(!read)
     {
         std::cout << "Opening " << sPath << "failed. \n";
-        return;
+        return NULL;
     }
 
     //Load data into json
@@ -130,40 +153,39 @@ void CGame::dialogFactory(std::string sPath)
     //Create vector with all states of dialog.
     std::vector<nlohmann::json> v_states = j_dialog;
     
-    //Create map
-    std::map<size_t, nlohmann::json> mapStates;
-    for(size_t it=0; it<v_states; it++)
+    //Create map of states
+    std::map<std::string, CState*>* mapStates = new std::map<std::string, CState*>; 
+    for(size_t it=0; it<v_states.size(); it++)
     {
-        nlohmann::json fooState = v_states[it];
-        mapStates.insert(std::pair<size_t, nlohmann::json>(fooState["id"], fooState));
-    }
+        //Create json of current state
+        nlohmann::json j_state = v_states[it];
 
-    size_t wahl = 0;
-    size_t index = 0;
-    for(;;)
-    {
-        nlohmann::json j_state = mapStates.at(index);
-
-        std::cout << j_state["speaker"] << "  " << j_state["text"] << "\n";
-        if(j_state["option"] == 1)
+        //Create map of option states
+        std::vector<nlohmann::json> v_optStates = j_state["playerOptions"];
+        std::map<size_t, COptionState*>* mapOptStates = new std::map<size_t, COptionState*>;
+        for(size_t yt=0; yt<v_optStates.size(); yt++)
         {
-            std::vector<size_t> v_stateOptions = j_state["link"];
-            for(size_t it=0; it<v_stateOptions.size(); it++)
-            {
-                nlohmann::json j_fooState = v_states[v_stateOptions[it]];
-                std::cout << it+1 << ": " << j_fooState["text"] << "\n";
-            }
-            std::cout << ">"; cin>>wahl; 
+            //Create json of current option state
+            nlohmann::json j_optState = v_optStates[yt];
 
-            if(wahl<v_stateOptions.size())
-                index = v_stateOptions[wahl];
-            else
-                std::cout << "Wrong input!\n";
+            //Create option state
+            COptionState* optState = new COptionState(j_optState["keyWord"], j_optState["text"], j_optState["targetState"]);
+            //Insert option state into map of option states
+            mapOptStates->insert(std::pair<size_t, COptionState*>(j_optState["keyWord"], optState));
         }
-        
-        else
-            index = j_state["link"];
+
+        //Create state
+        CState* state = new CState(j_state["id"], j_state["text"], j_state["speaker"], 
+                            j_state.value("dialogEnd", ""), mapOptStates, j_state["end"]);
+        //Add state to list of states
+        mapStates->insert(std::pair<std::string, CState*>(j_state["id"], state));
     }
+
+    //Create dialog
+    CDialog* dialog = new CDialog(mapStates);
+
+    //Return dialog
+    return dialog;
 }
             
          

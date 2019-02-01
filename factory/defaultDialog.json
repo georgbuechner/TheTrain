@@ -1,0 +1,12 @@
+[
+    {   "id": "START",
+        "text":"Started talking to someone. They is, as most people are: grumpy.", 
+        "speaker":"STORY TELLER",
+        "playerOptions": [],
+        "end":true,
+        "dialogEnd":"Dialog enden."
+        
+    }
+]
+
+

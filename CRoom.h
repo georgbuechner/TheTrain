@@ -17,15 +17,18 @@ class CRoom
 {
 private:
     std::string m_sName;                            //Name of the room
+    std::string m_sDescription;                     //Room description
+
     std::map<size_t, CDoor*>*        m_mapOfDoors;  //List of doors leading out of this room 
     std::map<std::string, CCharacter*>* m_mapOfCharacters; //List of people in the room
 
 public:
     //Constructor
-    CRoom(std::string sName, std::map<size_t, CDoor*>* mapDoors, 
+    CRoom(std::string sName, std::string sDescription,  std::map<size_t, CDoor*>* mapDoors, 
           std::map<std::string, CCharacter*>* mapCharacters) {
 
         m_sName         = sName;
+        m_sDescription  = sDescription;
         m_mapOfDoors    = mapDoors;
         m_mapOfCharacters = mapCharacters;
     }
@@ -35,6 +38,11 @@ public:
     //Get the rooms name
     std::string getName() {
         return m_sName;
+    }
+
+    //Get description of room
+    std::string getDescription() {
+        return m_sDescription;
     }
 
     //Get list of all doors leading out off this room

@@ -6,9 +6,11 @@
 #include <iostream>
 #include <list>
 #include <map>
+#include <fstream>
 #include "CDoor.h"
 #include "CRoom.h"
 #include "CPlayer.h"
+#include "CDialog.h"
 #include "json.hpp"
 
 class CGame
@@ -29,7 +31,7 @@ public:
     std::map<size_t, CDoor*>*           doorFactory(nlohmann::json j_listDoors);
     std::map<std::string, CCharacter*>* characterFactory(nlohmann::json j_listCharacters);   
 
-    void dialogFactory(std::string sPath);
+    CDialog* dialogFactory(std::string sPath);
 
 
     void play();    
