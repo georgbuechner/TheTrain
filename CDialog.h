@@ -152,8 +152,12 @@ void CDialog::startDialog()
             std::cout << it ->second->getID() << ": " << it->second->getText() << "\n";
         
         //Player option
+        std::string sChoice;
         size_t choice;
-        std::cout << ">"; std::cin >>choice;
+        std::cout << ">"; 
+        
+        getline(std::cin, sChoice);
+        choice = std::stoi(sChoice);
         
         if(choice <=mapPlayerOptions->size())
         {

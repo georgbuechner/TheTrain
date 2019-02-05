@@ -5,123 +5,66 @@
 void CGame::play()
 {
     //Variables
-    int wahl;
 
     worldFactory();
 
     std::cout << m_Player->getName() << " befindet sich in " << m_Player->getCurRoom()->getName()<< ".\n";
 
+    //Create event manager
+    CEventManager* em = new CEventManager;
+
+    CEventHandler* h_doors  = new CEventHandler("basic_showDoors", &CEventHandler::echo_showDoors);
+    CEventHandler* h_change = new CEventHandler("basic_changeRoom", &CEventHandler::echo_changeRoom);
+    CEventHandler* h_people = new CEventHandler("basic_showPeople", &CEventHandler::echo_showPeople);
+    CEventHandler* h_talk   = new CEventHandler("basic_talkTo", &CEventHandler::echo_talkTo);
+    em->add_listener("showDoors", h_doors);
+    em->add_listener("changeRoom", h_change);
+    em->add_listener("showPeople", h_people);
+    em->add_listener("talkTo", h_talk);
+
+    CCommandParser parser;
+    std::string sInput;
+    int option;
 
     do
     {
-        std::cout << "Choose your action:   \n";
-        std::cout << "1: Show doors.        \n";
-        std::cout << "2: Change room.       \n";
-        std::cout << "3: Show people.       \n";
-        std::cout << "4: Talk to.           \n";
-        std::cout << "5: Quit game.         \n";
-        std::cout << "> "; cin >> wahl; 
+        std::cout << "> ";
+        getline(cin, sInput);
+         
 
-        switch(wahl)
+        option = parser.parseCommand(sInput); 
+        switch(option)
         {
             //Show all doors in room
             case(1):
             {
-                size_t counter = 1;
-
-                std::cout << "Doors: \n";
-                std::map<size_t, CDoor*>* mapDoors = m_Player->getCurRoom()->getMapDoors();
-                for(auto it=mapDoors->begin(); it!=mapDoors->end(); it++)
-                {
-                    std::cout << counter << ": " << it->second->getName() << ".\n";
-                    counter++;
-                }
-                std::cout << "\n";
+                CEvent* event = new CEvent("showDoors", m_Player);
+                em->throw_event(event);
+                delete event;
             }break;
 
             //Change room
             case(2):
             {
-                size_t counter = 0;
-                size_t wahl;
-
-                std::cout << "Doors: \n";
-                std::map<size_t, CDoor*>* mapDoors = m_Player->getCurRoom()->getMapDoors();
-                for(auto it=mapDoors->begin(); it!=mapDoors->end(); it++)
-                {
-                    counter++;
-                    std::cout << counter << ": " << it->second->getName() << ".\n";
-                }
-                std::cout << "> "; cin >> wahl;
-
-                if(wahl <= counter)
-                {
-                    CDoor* door = mapDoors->at(wahl-1);
-                    CRoom* room = m_mapAllRooms->at(door->getLinkedRoom());
-                    m_Player->setCurRoom(room);
-            
-                    //Print description
-                    if(door->getAltDesc().length() > 0)
-                        std::cout << door->getAltDesc() << "\n";
-                    else 
-                    {
-                        std::cout << door->getHeadDesc()    << "\n";
-                        std::cout << room->getDescription() << "\n";
-                        std::cout << door->getFootDesc()    << "\n";
-                    }
-                }
-
-                else
-                    std::cout << "Wrong Input! Door does not exist. Please try again.\n\n";
-
+                CEvent* event = new CEvent("changeRoom", m_Player, m_mapAllRooms);
+                em->throw_event(event);
+                delete event;
             }break;
 
             //Show people
             case(3):
             {
-                size_t counter = 0;
-            
-                std::cout << "People in the room: \n";
-                std::map<std::string, CCharacter*>* mapChars = m_Player->getCurRoom()->getMapChars();
-                for(auto it=mapChars->begin(); it!=mapChars->end(); it++)
-                {
-                    counter++;
-                    std::cout << counter << ": " << it->second->getName() << ".\n";
-                }
-                std::cout << "\n";
+                CEvent* event = new CEvent("showPeople", m_Player);
+                em->throw_event(event);
+                delete event;
             }break;
 
             //Talk to
             case(4):
             {
-                size_t counter = 0;
-                size_t choice;
-            
-                std::cout << "People in the room: \n";
-                std::map<std::string, CCharacter*>* mapChars = m_Player->getCurRoom()->getMapChars();
-                for(auto it=mapChars->begin(); it!=mapChars->end(); it++)
-                {
-                    counter++;
-                    std::cout << counter << ": " << it->second->getName() << ".\n";
-                }
-                std::cout << ">"; cin >>choice;
-
-                counter = 0;
-                bool found = false;
-                for(auto it=mapChars->begin(); it!=mapChars->end(); it++)
-                {
-                    counter++;
-                    if(choice == counter)
-                    {
-                        it->second->getDialog()->startDialog();
-                        found = true;
-                    }
-                }
-
-                if(found == false)
-                    std::cout << "Character not found.\n";
-
-                std::cout << "\n";
+                CEvent* event = new CEvent("talkTo", m_Player);
+                em->throw_event(event);
+                delete event;
             }break;
 
 
@@ -138,6 +81,6 @@ void CGame::play()
             }
         }
 
-    }while(wahl != 5);
+    }while(option != 5);
 
 }
