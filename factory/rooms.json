@@ -5,8 +5,8 @@
     "id":"abteil_a", 
     "description": "Du betrittst Abteil A. Ein alter Mann sitzt am Fenster, schaut auf die Landschaft und raucht.",
 
-    "exits":  [ {"name":"abteil_a-flur", "to":"flur", "descriptions":["abteil-flur1.txt"]} ],
-    "characters": [ {"name":"Alter Mann", "id":"alter_mann"} ]
+    "exits":  [ {"name":"Flur", "id":"abteil_a-flur", "to":"flur", "take":["in den Flur", "in den flur", "raus"]} ],
+    "characters": [ {"name":"Alter Mann", "id":"alter_mann", "take":["Alter Mann", "alter mann"]} ]
 },
 
 {
@@ -14,8 +14,8 @@
     "id":"abteil_b", 
     "description":"Du betrittst Abteil B. Das Abteil ist leer.",
 
-    "exits":  [ {"name":"abteil_b-flur", "to":"flur", "descriptions":["abteil-flur1.txt"]} ],
-    "characters": [ {"name":"Jay", "id":"jay"} ]
+    "exits":  [ {"name":"Flur","id":"abteil_b-flur", "to":"flur", "take":["in den Flur", "raus"]} ],
+    "characters": [ {"name":"Jay", "id":"jay", "take":["Jay"]} ]
 },
 
 {
@@ -23,8 +23,9 @@
     "id":"abteil_c", 
     "description":"Du betrittst dein Abteil. Ein junger Mann sitz gegen Fahrtrichtung am Fenster. Du wünscht die mit ihm ins Gespräch zu kommen.",
 
-    "exits":  [ {"name":"abteil_c-flur", "to":"flur", "descriptions":["abteil-flur1.txt"]} ],
-    "characters": [ {"name":"Parsen Rogochin", "id":"parsen_rogochin", "dialog":"factory/parsenDialog.json"} ]
+    "exits":  [ {"name":"Flur", "id":"abteil_c-flur", "to":"flur", "take":["in den Flur", "raus"]} ],
+    "characters": [ {"name":"Parsen Rogochin", "id":"parsen_rogochin", "take":["Parsen", "Parsen Rogochin", "Rogochin"], "dialog":"factory/parsenDialog.json"},
+                    {"name":"Typ", "id":"typ", "take":["Typ", "den Typ", "einen Typ"]} ]
 },
 
 {   
@@ -32,12 +33,12 @@
     "id":"abteil_d", 
     "description":"Du betrittst Abteil D. Eine Mutter sitz hier mit ihren Kindern.",
 
-    "exits": [ {"name":"abteil_d-flur", "to":"flur", "descriptions":["abteil-flur1.txt"]} ],
+    "exits": [ {"name":"Flur","id":"abteil_d-flur", "to":"flur", "take":["in den Flur", "raus"]} ],
     "characters":
     [
-        {"name":"Mutter", "id":"mutter"},
-        {"name":"Kind1", "id":"kind1"},
-        {"name":"Kind2", "id":"kind2"}
+        {"name":"Mutter", "id":"mutter", "take":["die Mutter", "Mutter"]},
+        {"name":"Kind1", "id":"kind1", "take":["Kind1"]},
+        {"name":"Kind2", "id":"kind2", "take":["Kind2"]}
     ]
 },
 
@@ -46,24 +47,24 @@
     "id":"abteil_e", 
     "description":"Du betrittst das Abteil E. Eine seltsame Konstellation - Ein alter Mann, rauchend, am Fenster und zwei Damen in auffällig bunten Klamotten sitzen ihm gegenüber. Der Mann scheint die Frauennicht zu kennen, diese aber von seinem Rauchen sehr genervt zu sein.",
 
-    "exits": [ {"name":"abteil_e-flur", "to":"flur", "descriptions":["abteil-flur1.txt"]} ],
+    "exits": [ {"name":"Flur", "id":"abteil_e-flur", "to":"flur", "take":["in den Flur", "raus"]} ],
     "characters":
     [
-        {"name":"Der General", "id":"der_general"},
-        {"name":"Eine Damen in pink", "id":"eine_dame_in_pink"},
-        {"name":"Eine weiter Dame in pink", "id":"eine_weitere_dame_in_pink"}
+        {"name":"Der General", "id":"der_general", "take":["Den General", "General", "Der General"]},
+        {"name":"Eine Damen in pink", "id":"eine_dame_in_pink", "take":["Dame in pink"]},
+        {"name":"Eine weiter Dame in pink", "id":"eine_weitere_dame_in_pink", "take":["weitere Dame in pink"]}
     ]
 },
 
 {"name":"Flur", "id": "flur",
-    "description": "du betrittst den Flur",
+    "description": "du betrittst den Flur.",
     "exits":
     [
-        {"name":"flur-abteil_a", "to":"abteil_a"}, 
-        {"name":"flur-abteil_b", "to":"abteil_b", "altDescription": "du betrittst den Flur und stößt dir den Kopf and der Tür."}, 
-        {"name":"flur-abteil_c", "to":"abteil_c"}, 
-        {"name":"flur-abteil_d", "to":"abteil_d"},
-        {"name":"flur-abteil_e", "to":"abteil_e"}
+        {"name":"Abteil-A", "id":"flur-abteil_a", "to":"abteil_a", "take":["in Abteil-A"]}, 
+        {"name":"Abteil-B", "id":"flur-abteil_b", "to":"abteil_b", "take":["in Abteil-B"], "altDescription": "du betrittst Abteil B und stößt dir den Kopf and der Tür."}, 
+        {"name":"Abteil-C", "id":"flur-abteil_c", "to":"abteil_c", "take":["in Abteil-C"]}, 
+        {"name":"Abteil-D", "id":"flur-abteil_d", "to":"abteil_d", "take":["in Abteil-D"]},
+        {"name":"Abteil-E", "id":"flur-abteil_e", "to":"abteil_e", "take":["in Abteil-E"]}
     ],
     "characters": []
 }

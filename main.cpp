@@ -1,7 +1,5 @@
 #include <iostream>
-#include "CGame.h"
-#include "play.cpp"
-#include "worldFactory.cpp"
+#include "CGame.hpp"
 
 int main()
 {
