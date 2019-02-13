@@ -11,8 +11,6 @@ void CGame::play()
     //Call word factory create all rooms, characters... 
     worldFactory();
 
-    std::cout << "Map quests size: " << m_mapQuests.size() << "\n";
-
     //Create command parser 
     CCommandParser parser;
 
@@ -56,9 +54,6 @@ void CGame::play()
         //Parse command into event
         CEvent* event = parser.parseCommand(sInput); 
         
-        //Pass pointer to current context (CGame) to event
-        event->setGame(this);
-
         //Throw event
         m_EM->throw_event(event);
 

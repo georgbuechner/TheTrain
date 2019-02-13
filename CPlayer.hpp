@@ -54,7 +54,7 @@ public:
     * getQuests: return player's quests 
     * @return list<Quests*> (List of player's quests)
     */
-    std::list<CQuest*> getQuests() {
+    std::list<CQuest*>& getQuests() {
         return m_listQuests;
     }
 

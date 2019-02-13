@@ -36,8 +36,8 @@ void CQuest::printQuest()
     for(auto it=m_listSteps.begin(); it!=m_listSteps.end(); it++)
     {
         std::cout << "-- " << (*it)->getName() << "\n";
-        std::cout << (*it)->getDescription() << "\n\n";
+        std::cout << (*it)->getDescription() << "\n";
     }
     
-    std::cout << "\n\n";
+    std::cout << "\n";
 }
