@@ -12,7 +12,7 @@
 
 //Forward declarations 
 class CEventhandler;
-
+class CGame;
 
 #include <iostream>
 #include <string>
@@ -27,12 +27,15 @@ private:
    
     //Attributes
     std::map<std::string, std::list<CEventhandler*>*> m_mapHandlers;   //Map with eventhandlers
+    CGame* m_game;
 
 public:
     /**
     * Constructor
     */
-    CEventmanager() {}
+    CEventmanager(CGame* game) {
+        m_game = game;
+    }
 
     /** 
     * add_listener: add "listener" (eventhandler) to eventmanager.

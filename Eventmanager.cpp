@@ -62,6 +62,9 @@ void CEventmanager::throw_event(CEvent* event)
         return;
     std::list<CEventhandler*>* listEventhandlers = m_mapHandlers.at(event->getEventType());
 
+    //Add pointer of game to event
+    event->setGame(m_game);
+
     //Iterate over list of handlers and delete handler when found
     for(auto it=listEventhandlers->begin(); it!=listEventhandlers->end(); it++)
         (*it)->callHandlerFunction(event);
