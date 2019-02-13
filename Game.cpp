@@ -17,7 +17,7 @@ void CGame::play()
     CCommandParser parser;
 
     //Create event manager and basic eventhandlers
-    m_EM = new CEventmanager;
+    m_EM = new CEventmanager(this);
 
     //Create event handlers 
     CEventhandler* h_exits  = new CEventhandler("basic_showExits", &CEventhandler::echo_showExits);
@@ -236,7 +236,7 @@ std::map<std::string, CEventmanager*> CGame::emDialogsFactory()
     std::map<std::string, CEventmanager*> mapEMs; 
 
     // *** factory/parsenDialog.json *** //
-    CEventmanager* eventmanager = new CEventmanager;
+    CEventmanager* eventmanager = new CEventmanager(this);
     CEventhandler* h_anna = new CEventhandler("quest_jay", &CEventhandler::echo_parsenDialogAnna);
     eventmanager->add_listener("anna", h_anna);
     mapEMs.insert(std::pair<std::string, CEventmanager*> 
@@ -303,7 +303,7 @@ CDialog* CGame::dialogFactory(std::string sPath)
     }
 
     //Create dialog eventmanager if exists
-    CEventmanager* em = new CEventmanager;
+    CEventmanager* em = new CEventmanager(this);
     if(m_dialogEvents.count(sPath) > 0)
         em = m_dialogEvents.at(sPath);
 

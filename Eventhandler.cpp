@@ -145,6 +145,7 @@ void CEventhandler::echo_showActiveQuests(CEvent* event)
     std::list<CQuest*> listQuests = event->getGame()->getPlayer().getQuests();
 
     //Print all active quests
+    std::cout << "Aktive Quests: (Anzahl Quests: " << listQuests.size() << ") \n";
     for(auto it=listQuests.begin(); it!=listQuests.end(); it++)
     {
         if((*it)->getAchieved() == false)
@@ -163,6 +164,7 @@ void CEventhandler::echo_showSolvedQuests(CEvent* event)
     std::list<CQuest*> listQuests = event->getGame()->getPlayer().getQuests();
 
     //Print all active quests
+    std::cout << "Gelöste Quests: \n";
     for(auto it=listQuests.begin(); it!=listQuests.end(); it++)
     {
         if((*it)->getAchieved() == true)
@@ -239,6 +241,7 @@ void CEventhandler::echo_parsenDialogAnna(CEvent* event)
     //Add quests tp players list of quests
     event->getGame()->getPlayer().getQuests().push_back(quest);
 
-    std::cout << "Quest added to players list of quests.\n";
+    std::cout << "Quest added to players list of quests. Anzahl quests: ";
+    std::cout << event->getGame()->getPlayer().getQuests().size() << "\n";
 }
 

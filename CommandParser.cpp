@@ -19,6 +19,8 @@ CEvent* CCommandParser::parseCommand(std::string sInput)
     std::regex showcharacters("(Z|z)eige.*(P|p)ersonen.*");
     std::regex talkTo1("(S|s)(preche )(.*) an");
     std::regex talkTo2("(R|r)(ede mit )(.*)");
+    std::regex showActive("(((Z|z)eig(e?) )?.*(A|a)ktive(n?) (Q|q)uests)");
+    std::regex showSolved("(((Z|z)eig )?(G|g)elöste (Q|q)uests)|((Z|z)eig(e?) mir.*gelösten quests)");
     std::regex end("((V|v)erlasse|(B|b)eende).*(S|s)piel");
 
     //Create an instans of smatch
@@ -48,6 +50,18 @@ CEvent* CCommandParser::parseCommand(std::string sInput)
     //Talk to character:
     if(std::regex_match(sInput, m, talkTo1) || std::regex_match(sInput, m, talkTo2)) {
         CEvent* event = new CEvent("talkTo", m[3]); 
+        return event;
+    }
+
+    //Show active quests
+    if(std::regex_match(sInput, m, showActive)) {
+        CEvent* event = new CEvent("showActiveQuests", "");
+        return event;
+    }
+
+    //Show solved quests
+    if(std::regex_match(sInput, m, showSolved)) {
+        CEvent* event = new CEvent("showSolvedQuests", "");
         return event;
     }
 
