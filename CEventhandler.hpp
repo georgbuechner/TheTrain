@@ -67,12 +67,14 @@ public:
     // **** ****  handlers **** **** //
 
     // ** basic handlers ** // 
-    void echo_showExits(CEvent* event);     //Basic handler showing all exits       (ET: "showExits")
-    void echo_changeRoom(CEvent* event);    //Basic handler to change room          (ET: "changeRoom")
-    void echo_showChars(CEvent* event);     //Basic handler to show all chars       (ET: "showChars")
-    void echo_talkTo(CEvent* event);        //Basic handler to start conversation   (ET: "talkTO")
-    void echo_endGame(CEvent* event);       //Basic handler ending the game         (ET: "endGame")
-    void echo_falseInput(CEvent* event);    //Basic handler printing error message  (ET: "falseInput")
+    void echo_showExits(CEvent* event);         //showing all exits         (ET: "showExits")
+    void echo_changeRoom(CEvent* event);        //change room               (ET: "changeRoom")
+    void echo_showChars(CEvent* event);         //show all chars            (ET: "showChars")
+    void echo_talkTo(CEvent* event);            //start conversation        (ET: "talkTO")
+    void echo_showActiveQuests(CEvent* event);  //show active quests        (ET: "showActiveQuests")
+    void echo_showSolvedQuests(CEvent* event);  //show solved quests        (ET: "showSolvedQuests")
+    void echo_endGame(CEvent* event);           //ending the game           (ET: "endGame")
+    void echo_falseInput(CEvent* event);        //printing error message    (ET: "falseInput")
     void echo_foo(CEvent* event);
 
 

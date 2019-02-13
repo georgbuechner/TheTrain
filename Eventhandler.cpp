@@ -135,6 +135,43 @@ void CEventhandler::echo_talkTo(CEvent* event)
 }
 
 /**
+* handler_showActiveQuests: show all active quests.
+* EventType: "showActiveQuests"
+* @parameter CEvent* (pointer to event thrown)
+*/
+void CEventhandler::echo_showActiveQuests(CEvent* event)
+{
+    //Get list of players quests
+    std::list<CQuest*> listQuests = event->getGame()->getPlayer().getQuests();
+
+    //Print all active quests
+    for(auto it=listQuests.begin(); it!=listQuests.end(); it++)
+    {
+        if((*it)->getAchieved() == false)
+            (*it)->printQuest();
+    }
+}
+
+/**
+* handler_showSolvedQuests: show all solved quests.
+* EventType: "showSolvedQuests"
+* @parameter CEvent* (pointer to event thrown)
+*/
+void CEventhandler::echo_showSolvedQuests(CEvent* event)
+{
+    //Get list of players quests
+    std::list<CQuest*> listQuests = event->getGame()->getPlayer().getQuests();
+
+    //Print all active quests
+    for(auto it=listQuests.begin(); it!=listQuests.end(); it++)
+    {
+        if((*it)->getAchieved() == true)
+            (*it)->printQuest();
+    }
+}
+
+
+/**
 * handler_endGame: Print message for end of game (this might better be moved into CGame::play() )
 * and set CGame::m_gameEnd to true (this causes main loop in CGame::play() function to break)
 * Eventtype: "endGame"
@@ -189,7 +226,19 @@ void CEventhandler::echo_foo(CEvent* event)
 // **** factory/parsenDialog.json **** //
 void CEventhandler::echo_parsenDialogAnna(CEvent* event)
 {
-    std::cout << "Quest: Bringe Jay das Packet wurde angenommen! \n";
-    
+    if(event->getGame()->getQuests().count("talk_to_jay") == 0)
+    {
+        std::cout << "Quest not found.\n";
+        return;
+    }
+
+    CQuest* quest = event->getGame()->getQuests().at("talk_to_jay");
+
+    std::cout << "Quest \"" << quest->getName() << "\" angenommen.\n";
+
+    //Add quests tp players list of quests
+    event->getGame()->getPlayer().getQuests().push_back(quest);
+
+    std::cout << "Quest added to players list of quests.\n";
 }
 

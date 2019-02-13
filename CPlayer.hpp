@@ -4,8 +4,11 @@
 #ifndef CPLAYER_H
 #define CPLAYER_H
 
-#include <map>
+#include <iostream>
+#include <string>
+#include <list>
 #include "CRoom.hpp"
+#include "CQuest.hpp"
 
 using namespace std;
 
@@ -17,6 +20,7 @@ private:
     //Attributes 
     std::string m_sName;    //Name of Player (can be chosen at the beginning of the game)
     CRoom* m_curRoom;       //The room the player is currently in
+    std::list<CQuest*> m_listQuests;    //List of all the players quests
 
 public:
 
@@ -28,7 +32,7 @@ public:
         m_curRoom = curRoom;
     }
 
-    //Getter
+    // ** Getter ** //
 
     /**
     * getName: return player's name
@@ -46,6 +50,16 @@ public:
         return m_curRoom;
     }
 
+    /**
+    * getQuests: return player's quests 
+    * @return list<Quests*> (List of player's quests)
+    */
+    std::list<CQuest*> getQuests() {
+        return m_listQuests;
+    }
+
+
+
     //Setter
 
     /** 
@@ -62,7 +76,6 @@ public:
     void setCurRoom(CRoom* newRoom) {
         m_curRoom = newRoom;
     }
-
 };
 
 #endif

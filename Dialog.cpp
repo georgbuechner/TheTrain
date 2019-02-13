@@ -16,10 +16,10 @@ void CDialog::startDialog()
         //Create current state
         CDialogState* curState = m_mapStates.at(sIndex);
 
-        //print text
+        //Print text
         std::cout << curState->getSpeaker() << "  " << curState->getText() << "\n";
 
-        std::cout << sIndex << std::endl;
+        //Throw event "dialogstate [index] started"
         CEvent* event = new CEvent(sIndex, "");
         m_EM->throw_event(event);
         delete event;

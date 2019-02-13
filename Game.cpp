@@ -11,6 +11,8 @@ void CGame::play()
     //Call word factory create all rooms, characters... 
     worldFactory();
 
+    std::cout << "Map quests size: " << m_mapQuests.size() << "\n";
+
     //Create command parser 
     CCommandParser parser;
 
@@ -22,6 +24,8 @@ void CGame::play()
     CEventhandler* h_change = new CEventhandler("basic_changeRoom", &CEventhandler::echo_changeRoom);
     CEventhandler* h_chars  = new CEventhandler("basic_showChars", &CEventhandler::echo_showChars);
     CEventhandler* h_talk   = new CEventhandler("basic_talkTo", &CEventhandler::echo_talkTo);
+    CEventhandler* h_showActive = new CEventhandler("basic_showActive", &CEventhandler::echo_showActiveQuests);
+    CEventhandler* h_showSolved = new CEventhandler("basic_showSolved", &CEventhandler::echo_showSolvedQuests);
     CEventhandler* h_endGame= new CEventhandler("basic_end", &CEventhandler::echo_endGame);
     CEventhandler* h_falseInput = new CEventhandler("basic_falseInput", &CEventhandler::echo_falseInput);
     CEventhandler* h_foo = new CEventhandler("foo", &CEventhandler::echo_foo);
@@ -31,6 +35,8 @@ void CGame::play()
     m_EM->add_listener("changeRoom", h_change);
     m_EM->add_listener("showChars", h_chars);
     m_EM->add_listener("talkTo", h_talk);
+    m_EM->add_listener("showActiveQuests", h_showActive);
+    m_EM->add_listener("showSolvedQuests", h_showSolved);
     m_EM->add_listener("endGame", h_endGame);
     m_EM->add_listener("falseInput", h_falseInput);
 
@@ -71,8 +77,14 @@ void CGame::play()
 */
 void CGame::worldFactory()
 {
-    //***** Create Eventmanagers //
-    eventmanagerFactory();
+    //***** Create Eventmanagers ****** //
+
+    //Create eventmanagers from all dialogs
+    m_dialogEvents = emDialogsFactory();
+
+    
+    //***** Create quests *****//
+    m_mapQuests = questFactory();
 
     //***** Create Rooms *****//
     m_mapAllRooms = roomFactory("factory/rooms.json");
@@ -216,16 +228,21 @@ std::map<std::string, CCharacter*> CGame::characterFactory(nlohmann::json j_list
 }
 
 /** 
-* eventmanagerFactory: create all dialog eventmanagers.
+* emDialogsFactory: create all dialog eventmanagers.
 */
-void CGame::eventmanagerFactory()
+std::map<std::string, CEventmanager*> CGame::emDialogsFactory()
 {
+    //Create map of eventmanagers
+    std::map<std::string, CEventmanager*> mapEMs; 
+
     // *** factory/parsenDialog.json *** //
     CEventmanager* eventmanager = new CEventmanager;
     CEventhandler* h_anna = new CEventhandler("quest_jay", &CEventhandler::echo_parsenDialogAnna);
     eventmanager->add_listener("anna", h_anna);
-    m_dialogEvents.insert(std::pair<std::string, CEventmanager*> 
+    mapEMs.insert(std::pair<std::string, CEventmanager*> 
                                         ("factory/parsenDialog.json", eventmanager));
+
+    return mapEMs;
 }
 
 
@@ -297,3 +314,25 @@ CDialog* CGame::dialogFactory(std::string sPath)
     return dialog;
 }
  
+
+/**
+* questFactory: creates all quests in game.
+*/
+std::map<std::string, CQuest*> CGame::questFactory()
+{
+    //Create map of quests
+    std::map<std::string, CQuest*> mapQuests;
+
+    //Quest: Talk to Jay
+    CQuest* quest = new CQuest("talk_to_jay", "Talk to Jay", "Parsen told you to talk to Jay.");
+
+    //Create steps
+    CQuestStep* questStep1 = new CQuestStep("Find Jay", "Find Jay and talk to her.", 0);
+    quest->addStep(questStep1);
+
+    //Add quest to map of alle quests
+    mapQuests.insert(std::pair<std::string, CQuest*> ("talk_to_jay", quest));
+
+    return mapQuests;
+} 
+

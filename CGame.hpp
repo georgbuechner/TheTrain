@@ -14,6 +14,7 @@
 //Forward declarations
 class CEventmanager;
 class CDialog;
+class CQuest;
 
 #include <iostream>
 #include <list>
@@ -27,6 +28,8 @@ class CDialog;
 #include "CEvent.hpp"
 #include "CEventhandler.hpp"
 #include "CCommandParser.hpp"
+#include "CQuest.hpp"
+#include "CQuestStep.hpp"
 #include "json.hpp"
 
 
@@ -38,10 +41,10 @@ private:
     CPlayer m_Player;                               //Player 
     CEventmanager* m_EM;                            //Eventmanager of the game
     bool m_gameEnd;                                 //Game ended? 
-    std::map<std::string, CRoom*> m_mapAllRooms;    //Dictionary of all exits in the game.
 
-    std::map<std::string, CEventmanager*> m_dialogEvents;   //Map of all dialog event-
-                                                            //managers.
+    std::map<std::string, CRoom*> m_mapAllRooms;            //Map of all exits in the game.
+    std::map<std::string, CQuest*> m_mapQuests;             //Map of all quests in the game.
+    std::map<std::string, CEventmanager*> m_dialogEvents;   //Map of all dialog eventmanagers.
 
 
 public:
@@ -81,6 +84,13 @@ public:
         return m_mapAllRooms;
     }
 
+    /**
+    * getQuets: return map of all quests 
+    * @return map<string, CQuets*> (map of all quests in the game)
+    */
+    std::map<std::string, CQuest*>& getQuests() {
+        return m_mapQuests;
+    }
     // ** setter ** //
 
     /**
@@ -132,9 +142,9 @@ public:
     std::map<std::string, CCharacter*> characterFactory(nlohmann::json j_listCharacters);   
 
     /** 
-    * eventmanagerFactory: create all dialog eventmanagers.
+    * emDialogsFactory: create all dialog eventmanagers.
     */
-    void eventmanagerFactory();
+    std::map<std::string, CEventmanager*> emDialogsFactory();
 
     /**
     * dialogFactory: gets called by characterFactory. Parses a given dialog (.json-file) into 
@@ -144,6 +154,10 @@ public:
     */
     CDialog* dialogFactory(std::string sPath);
 
+    /**
+    * questFactory: creates all quests in game.
+    */
+    std::map<std::string, CQuest*> questFactory();
 };
    
 #endif
