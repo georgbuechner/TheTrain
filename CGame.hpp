@@ -157,7 +157,14 @@ public:
     /**
     * questFactory: creates all quests in game.
     */
-    std::map<std::string, CQuest*> questFactory();
+    std::map<std::string, CQuest*> questFactory(std::string);
+
+    /**
+    * questStepFactory: create all steps of a quest.
+    * @parameter vector<nlohmann::json> (vecor with all steps of a quest)
+    * @return list<CQuestStep*> (list with all quest-steps)
+    */
+    std::list<CQuestStep*> questStepFactory(std::vector<nlohmann::json> v_steps);
 };
    
 #endif

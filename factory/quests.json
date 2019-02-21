@@ -1,13 +1,13 @@
 [
     {
-        "id":"talkt_to_jay",
+        "id":"talk_to_jay",
         "name":"Überbringe ein Packet",
         "description":"Parsen Rogochin, den du in deinem Abteil getroffen hast, hat dich beauftragt Jay zu suchen und ein Packet zu überbringen.",
         "steps":
         [
-            {"name":"Finde Jay", "description":"Zuerst musst du natürlich Jay finden.", "achived":1},
-            {"name":"Rede mit Jay", "description":"Rede mit Jay, um ihr das Packet zu übergeben.", "achieved":0},
-            {"name":"Rede mit Parsen", "description":"Anscheinend hat ist Parsen in Jay verliebt und versucht ihr immer wieder Geschenke zu machen. Jay mag das aber nicht.", "achieved":0}
+            {"name":"Finde Jay", "description":"Zuerst musst du natürlich Jay finden.", "achieved":false, "active": true},
+            {"name":"Rede mit Jay", "description":"Rede mit Jay, um ihr das Packet zu übergeben.", "achieved":false, "active": false},
+            {"name":"Rede mit Parsen", "description":"Anscheinend hat ist Parsen in Jay verliebt und versucht ihr immer wieder Geschenke zu machen. Jay mag das aber nicht.", "achieved":false, "active":false}
         ]
     }
 ]

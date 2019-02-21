@@ -19,7 +19,8 @@ private:
     //Attributes
     std::string m_sName;            //Queststep's name
     std::string m_sDescription;     //Queststep's description
-    int m_achieved;                 //0: Step not active yet, 1: Step not achieved, 2: Step achieved
+    bool m_achieved;                //Indicating whether step is already solved or not
+    bool m_active;                  //Indicating whether step is already active or not
 
 public:
     
@@ -29,12 +30,13 @@ public:
     * @parameter string (step's description)
     * @parameter int (achieved)
     */
-    CQuestStep(std::string sName, std::string sDescription, int achieved) {
+    CQuestStep(std::string sName, std::string sDescription, bool achieved, bool active) {
 
         //Assign attributes
         m_sName = sName;
         m_sDescription = sDescription;
         m_achieved = achieved;
+        m_active = active;
     }
 
 
@@ -57,12 +59,21 @@ public:
     }
 
     /**
-    * getAchieved: get info whether step is 0: not active yet, 1: not achieved, 2: achieved.
-    * @return int
+    * getAchieved: get info whether step is solved or not
+    * @return bool
     */
-    int getAchieved() {
+    bool getAchieved() {
         return m_achieved;
     }
+    
+    /**
+    * getActive: get info whether step is active or not
+    * @return bool 
+    */
+    bool getActive() {
+        return m_active;
+    }
+
 };
 
 

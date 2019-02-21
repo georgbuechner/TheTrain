@@ -33,7 +33,7 @@ public:
     * @parameter string (Quest's name)
     * @parameter string (Quest's description)
     */
-    CQuest(std::string sID, std::string sName, std::string sDescription);
+    CQuest(std::string sID, std::string sName, std::string sDescription, std::list<CQuestStep*> steps);
 
 
     // ** getter ** //

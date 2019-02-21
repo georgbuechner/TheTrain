@@ -1,68 +1,10 @@
-// *** CGame *** //
+/** 
+* wordfactory
+* Create all rooms, doors, characters, dialogs and quests
+* Here everything is created by parsing jsons
+*/ 
 
 #include "CGame.hpp"
-
-/**
-* play: function with main loop. Also creates all eventhandlers
-*/
-void CGame::play()
-{
-
-    //Call word factory create all rooms, characters... 
-    worldFactory();
-
-    //Create command parser 
-    CCommandParser parser;
-
-    //Create event manager and basic eventhandlers
-    m_EM = new CEventmanager(this);
-
-    //Create event handlers 
-    CEventhandler* h_exits  = new CEventhandler("basic_showExits", &CEventhandler::echo_showExits);
-    CEventhandler* h_change = new CEventhandler("basic_changeRoom", &CEventhandler::echo_changeRoom);
-    CEventhandler* h_chars  = new CEventhandler("basic_showChars", &CEventhandler::echo_showChars);
-    CEventhandler* h_talk   = new CEventhandler("basic_talkTo", &CEventhandler::echo_talkTo);
-    CEventhandler* h_showActive = new CEventhandler("basic_showActive", &CEventhandler::echo_showActiveQuests);
-    CEventhandler* h_showSolved = new CEventhandler("basic_showSolved", &CEventhandler::echo_showSolvedQuests);
-    CEventhandler* h_endGame= new CEventhandler("basic_end", &CEventhandler::echo_endGame);
-    CEventhandler* h_falseInput = new CEventhandler("basic_falseInput", &CEventhandler::echo_falseInput);
-    CEventhandler* h_foo = new CEventhandler("foo", &CEventhandler::echo_foo);
-
-    //Add listeners to eventmanager
-    m_EM->add_listener("showExits", h_exits);
-    m_EM->add_listener("changeRoom", h_change);
-    m_EM->add_listener("showChars", h_chars);
-    m_EM->add_listener("talkTo", h_talk);
-    m_EM->add_listener("showActiveQuests", h_showActive);
-    m_EM->add_listener("showSolvedQuests", h_showSolved);
-    m_EM->add_listener("endGame", h_endGame);
-    m_EM->add_listener("falseInput", h_falseInput);
-
-
-    //Print player name and current room of player
-    std::cout << m_Player.getName() << " befindet sich in " << m_Player.getCurRoom()->getName() << ".\n";
-
-    //Main loop: here player can talk to characters, change room and so on
-    std::string sInput;
-    do
-    {
-        //Get player command
-        std::cout << "> ";
-        getline(cin, sInput);
-         
-
-        //Parse command into event
-        CEvent* event = parser.parseCommand(sInput); 
-        
-        //Throw event
-        m_EM->throw_event(event);
-
-        //Delete event
-        delete event;
-
-    }while(m_gameEnd == false);
-
-}
 
 
 // *** Factorys *** // (Factorys create objects, like characters, rooms, exits and further more)
@@ -79,7 +21,7 @@ void CGame::worldFactory()
 
     
     //***** Create quests *****//
-    m_mapQuests = questFactory();
+    m_mapQuests = questFactory("factory/quests.json");
 
     //***** Create Rooms *****//
     m_mapAllRooms = roomFactory("factory/rooms.json");
@@ -222,25 +164,6 @@ std::map<std::string, CCharacter*> CGame::characterFactory(nlohmann::json j_list
     return mapCharacters;
 }
 
-/** 
-* emDialogsFactory: create all dialog eventmanagers.
-*/
-std::map<std::string, CEventmanager*> CGame::emDialogsFactory()
-{
-    //Create map of eventmanagers
-    std::map<std::string, CEventmanager*> mapEMs; 
-
-    // *** factory/parsenDialog.json *** //
-    CEventmanager* eventmanager = new CEventmanager(this);
-    CEventhandler* h_anna = new CEventhandler("quest_jay", &CEventhandler::echo_parsenDialogAnna);
-    eventmanager->add_listener("anna", h_anna);
-    mapEMs.insert(std::pair<std::string, CEventmanager*> 
-                                        ("factory/parsenDialog.json", eventmanager));
-
-    return mapEMs;
-}
-
-
 /**
 * dialoGFactory: gets called by characterFactory. Parses a given dialog (.json-file) into 
 * an object of CDialog. Each dialog is owned by a character.
@@ -313,21 +236,78 @@ CDialog* CGame::dialogFactory(std::string sPath)
 /**
 * questFactory: creates all quests in game.
 */
-std::map<std::string, CQuest*> CGame::questFactory()
+std::map<std::string, CQuest*> CGame::questFactory(std::string sPath)
 {
     //Create map of quests
     std::map<std::string, CQuest*> mapQuests;
 
-    //Quest: Talk to Jay
-    CQuest* quest = new CQuest("talk_to_jay", "Talk to Jay", "Parsen told you to talk to Jay.");
+    //Read json with all quests
+    std::ifstream read(sPath);
+    
+    //Check whether json could be loaded
+    if(!read)
+    {
+        std::cout << "Path to quest-json not found.\n";
+        return mapQuests;
+    }
 
-    //Create steps
-    CQuestStep* questStep1 = new CQuestStep("Find Jay", "Find Jay and talk to her.", 0);
-    quest->addStep(questStep1);
+    //Create json with all quests
+    nlohmann::json j_listQuests;
+    read >> j_listQuests;
+    read.close();
+    
+    //Create a vector of all json objects (all quests)
+    std::vector<nlohmann::json> v_Quests = j_listQuests;
+      
+    //Iterate over all quests and create each quest.
+    for(size_t it = 0; it < v_Quests.size(); it++)
+    {
+        //Create a new json for the current quest.
+        nlohmann::json j_quest = v_Quests[it];
+        
+        //Parse attributes
+        std::string sID = j_quest["id"];
+        std::string sName = j_quest["name"];
+        std::string sDescription = j_quest["description"];
+        std::list<CQuestStep*> questSteps = questStepFactory(j_quest["steps"]);
+    
+        //Create quest
+        CQuest* quest = new CQuest(sID, sName, sDescription, questSteps);
 
-    //Add quest to map of alle quests
-    mapQuests.insert(std::pair<std::string, CQuest*> ("talk_to_jay", quest));
+        //Add quest to map of alle quests
+        mapQuests.insert(std::pair<std::string, CQuest*> (sID, quest));
+    }
 
     return mapQuests;
+} 
+
+/**
+* questStepFactory: create all steps of a quest.
+* @parameter vector<nlohmann::json> (vecor with all steps of a quest)
+* @return list<CQuestStep*> (list with all quest-steps)
+*/
+std::list<CQuestStep*> CGame::questStepFactory(std::vector<nlohmann::json> v_steps)
+{
+    //Create list of quest-steps
+    std::list<CQuestStep*> listSteps;
+    
+    //Iterate over all quest-steps and create each step.
+    for(size_t it=0; it<v_steps.size(); it++)
+    {
+        //Create new json for the current step
+        nlohmann::json j_step = v_steps[it];
+        std::string sName = j_step["name"];
+        std::string sDesc = j_step["description"];
+        bool achieved     = j_step["achieved"];
+        bool active       = j_step["active"];
+
+        //Create step
+        CQuestStep* step = new CQuestStep(sName, sDesc, achieved, active);
+
+        //Add step to list of steps
+        listSteps.push_back(step);
+    }
+
+    return listSteps;
 } 
 

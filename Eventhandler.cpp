@@ -141,6 +141,8 @@ void CEventhandler::echo_talkTo(CEvent* event)
 */
 void CEventhandler::echo_showActiveQuests(CEvent* event)
 {
+    size_t counter = 1;
+
     //Get list of players quests
     std::list<CQuest*> listQuests = event->getGame()->getPlayer().getQuests();
 
@@ -149,8 +151,31 @@ void CEventhandler::echo_showActiveQuests(CEvent* event)
     for(auto it=listQuests.begin(); it!=listQuests.end(); it++)
     {
         if((*it)->getAchieved() == false)
-            (*it)->printQuest();
+            std::cout << counter << ": " << (*it)->getName() << "\n";
     }
+
+
+    //Select quest for further information
+    std::cout << "Wähle Quest (Nummer): ";
+
+    //Player input and convert string to int
+    std::string sChoose;
+    size_t choose;
+    getline(cin, sChoose);
+    choose = std::stoi(sChoose);
+
+    //check whether input is correct
+    if(choose < 1 || choose > counter)
+    {
+        std::cout << "Falsche EIngabe!\n";
+        return;
+    }
+
+    //Print quest information
+    counter = 1;
+    auto it = listQuests.begin();
+    advance(it, counter-1);
+    (*it)->printQuest();
 }
 
 /**
@@ -164,12 +189,35 @@ void CEventhandler::echo_showSolvedQuests(CEvent* event)
     std::list<CQuest*> listQuests = event->getGame()->getPlayer().getQuests();
 
     //Print all active quests
+    size_t counter = 1;
     std::cout << "Gelöste Quests: \n";
     for(auto it=listQuests.begin(); it!=listQuests.end(); it++)
     {
         if((*it)->getAchieved() == true)
-            (*it)->printQuest();
+            std::cout << counter << ": " << (*it)->getName() << "\n";
     }
+
+    //Select quest for further information
+    std::cout << "Wähle Quest (Nummer): ";
+
+    //Player input and convert string to int
+    std::string sChoose;
+    size_t choose;
+    getline(cin, sChoose);
+    choose = std::stoi(sChoose);
+
+    //check whether input is correct
+    if(choose < 1 || choose > counter)
+    {
+        std::cout << "Falsche EIngabe!\n";
+        return;
+    }
+
+    //Print quest information
+    counter = 1;
+    auto it = listQuests.begin();
+    advance(it, counter-1);
+    (*it)->printQuest();
 }
 
 
@@ -200,6 +248,20 @@ void CEventhandler::echo_endGame(CEvent* event)
 }
 
 /**
+* handler_endGameDirectly: End game without asking
+* Eventtype: "endGameDirectly"
+* @parameter CEvent* (pointer to event thrown)
+*/
+void CEventhandler::echo_endGameDirectly(CEvent* event)
+{
+    std::cout << "Thank you for playing!\n";
+
+    //set CGame::m_gameEnd to true 
+    event->getGame()->setEndGame(true);
+}
+
+
+/**
 * handler_falseInput: print error message
 * Eventtype: "falseInput"
 * @parameter CEvent* (Pointer to event thrown)
@@ -209,16 +271,6 @@ void CEventhandler::echo_falseInput(CEvent* event)
     //Print error message
     std::cout << "Eventtype: \"" << event->getEventType() << "\" called. Please retry!\n";
 }
-
-
-/**
-* handler_foo
-*/
-void CEventhandler::echo_foo(CEvent* event)
-{
-    std::cout << event->getEventType() << " hahaha, I'm a foo\n";
-}
-
 
 
 
@@ -240,8 +292,5 @@ void CEventhandler::echo_parsenDialogAnna(CEvent* event)
 
     //Add quests tp players list of quests
     event->getGame()->getPlayer().getQuests().push_back(quest);
-
-    std::cout << "Quest added to players list of quests. Anzahl quests: ";
-    std::cout << event->getGame()->getPlayer().getQuests().size() << "\n";
 }
 

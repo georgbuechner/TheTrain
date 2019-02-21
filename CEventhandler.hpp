@@ -74,8 +74,8 @@ public:
     void echo_showActiveQuests(CEvent* event);  //show active quests        (ET: "showActiveQuests")
     void echo_showSolvedQuests(CEvent* event);  //show solved quests        (ET: "showSolvedQuests")
     void echo_endGame(CEvent* event);           //ending the game           (ET: "endGame")
+    void echo_endGameDirectly(CEvent* event);   //ending game directly      (ET: "endGameDirectly")
     void echo_falseInput(CEvent* event);        //printing error message    (ET: "falseInput")
-    void echo_foo(CEvent* event);
 
 
     // ** dialog handlers ** //
