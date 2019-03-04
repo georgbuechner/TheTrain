@@ -26,7 +26,7 @@ class CDialog
 private:
     
     //Attributes
-    std::map<std::string, CDialogState*> m_mapStates;    //Map containing all states of dialog
+    std::map<std::string, CDialogState*> m_mapStates;   //Map containing all states of dialog
     CEventmanager* m_EM;
 
 public:
@@ -39,6 +39,16 @@ public:
         //Assign attributes
         m_mapStates = mapStates;
         m_EM = em;
+    }
+
+    // ** Getter ** //
+
+    /**
+    * getStates: return all states of dialog
+    * @return map<std::string, CDialogState*> (return referenz to map of dialogs)
+    */
+    std::map<std::string, CDialogState*>& getStates() {
+        return m_mapStates;
     }
 
     /**

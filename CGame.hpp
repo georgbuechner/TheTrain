@@ -147,6 +147,11 @@ public:
     std::map<std::string, CEventmanager*> emDialogsFactory();
 
     /**
+    * emQuestFactory: create all quest eventmanagers.
+    */
+    void emQuestFactory();
+
+    /**
     * dialogFactory: gets called by characterFactory. Parses a given dialog (.json-file) into 
     * an object of CDialog. Each dialog is owned by a character.
     * @parameter string (Path to the json)
@@ -164,7 +169,7 @@ public:
     * @parameter vector<nlohmann::json> (vecor with all steps of a quest)
     * @return list<CQuestStep*> (list with all quest-steps)
     */
-    std::list<CQuestStep*> questStepFactory(std::vector<nlohmann::json> v_steps);
+    std::map<std::string, CQuestStep*> questStepFactory(std::vector<nlohmann::json> v_steps);
 };
    
 #endif

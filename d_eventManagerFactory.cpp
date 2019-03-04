@@ -22,9 +22,10 @@ std::map<std::string, CEventmanager*> CGame::emDialogsFactory()
     CEventhandler* h_anna = new CEventhandler("quest_jay", &CEventhandler::echo_parsenDialogAnna);
     eventmanager->add_listener("anna", h_anna);
     mapEMs.insert(std::pair<std::string, CEventmanager*> 
-                                        ("factory/parsenDialog.json", eventmanager));
+                                        ("factory/Dialogs/parsenDialog.json", eventmanager));
 
     return mapEMs;
 }
+
 
 

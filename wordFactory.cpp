@@ -15,11 +15,14 @@
 void CGame::worldFactory()
 {
     //***** Create Eventmanagers ****** //
+    m_EM = new CEventmanager(this);
 
     //Create eventmanagers from all dialogs
     m_dialogEvents = emDialogsFactory();
 
-    
+    //Create eventmanagers for all quests
+    emQuestFactory();
+
     //***** Create quests *****//
     m_mapQuests = questFactory("factory/quests.json");
 
@@ -152,7 +155,8 @@ std::map<std::string, CCharacter*> CGame::characterFactory(nlohmann::json j_list
         std::string sName   = j_Character["name"];
         std::string sID     = j_Character["id"];
         std::vector<std::string> vTake = j_Character["take"];
-        CDialog* dialog     = dialogFactory(j_Character.value("dialog", "factory/defaultDialog.json"));
+        std::string sPath   = "factory/Dialogs/" + j_Character.value("dialog", "defaultDialog.json");
+        CDialog* dialog     = dialogFactory(sPath);
 
         //Create character
         CCharacter* character = new CCharacter(sName, sID, vTake, dialog);
@@ -269,7 +273,7 @@ std::map<std::string, CQuest*> CGame::questFactory(std::string sPath)
         std::string sID = j_quest["id"];
         std::string sName = j_quest["name"];
         std::string sDescription = j_quest["description"];
-        std::list<CQuestStep*> questSteps = questStepFactory(j_quest["steps"]);
+        std::map<std::string, CQuestStep*> questSteps = questStepFactory(j_quest["steps"]);
     
         //Create quest
         CQuest* quest = new CQuest(sID, sName, sDescription, questSteps);
@@ -286,28 +290,29 @@ std::map<std::string, CQuest*> CGame::questFactory(std::string sPath)
 * @parameter vector<nlohmann::json> (vecor with all steps of a quest)
 * @return list<CQuestStep*> (list with all quest-steps)
 */
-std::list<CQuestStep*> CGame::questStepFactory(std::vector<nlohmann::json> v_steps)
+std::map<std::string, CQuestStep*> CGame::questStepFactory(std::vector<nlohmann::json> v_steps)
 {
     //Create list of quest-steps
-    std::list<CQuestStep*> listSteps;
+    std::map<std::string, CQuestStep*> mapSteps;
     
     //Iterate over all quest-steps and create each step.
     for(size_t it=0; it<v_steps.size(); it++)
     {
         //Create new json for the current step
         nlohmann::json j_step = v_steps[it];
+        std::string sID   = j_step["id"];
         std::string sName = j_step["name"];
         std::string sDesc = j_step["description"];
         bool achieved     = j_step["achieved"];
         bool active       = j_step["active"];
 
         //Create step
-        CQuestStep* step = new CQuestStep(sName, sDesc, achieved, active);
+        CQuestStep* step = new CQuestStep(sID, sName, sDesc, achieved, active);
 
         //Add step to list of steps
-        listSteps.push_back(step);
+        mapSteps.insert(std::pair<std::string, CQuestStep*>(sID, step));
     }
 
-    return listSteps;
+    return mapSteps;
 } 
 

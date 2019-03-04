@@ -70,7 +70,7 @@ public:
     void echo_showExits(CEvent* event);         //showing all exits         (ET: "showExits")
     void echo_changeRoom(CEvent* event);        //change room               (ET: "changeRoom")
     void echo_showChars(CEvent* event);         //show all chars            (ET: "showChars")
-    void echo_talkTo(CEvent* event);            //start conversation        (ET: "talkTO")
+    void echo_talkTo(CEvent* event);            //start conversation        (ET: "talkTo")
     void echo_showActiveQuests(CEvent* event);  //show active quests        (ET: "showActiveQuests")
     void echo_showSolvedQuests(CEvent* event);  //show solved quests        (ET: "showSolvedQuests")
     void echo_endGame(CEvent* event);           //ending the game           (ET: "endGame")
@@ -82,6 +82,15 @@ public:
 
     //factory/parsenDialog.json"
     void echo_parsenDialogAnna(CEvent* event);
+
+    
+    // ** quest handlers ** //
+    
+    //talk_to_jay
+    void echo_findJay(CEvent* event);           //Has Jay been found?       (ET: "showChars")
+    void echo_talkToJay(CEvent* event);         //Started talking to Jay?   (ET: "talkTo") 
+    void echo_gibGeschenk(CEvent* event);       //Dialog Geschenk geben     (ET: "gibGeschenk") 
+    void echo_gibGeschenkNicht(CEvent* event);  //Dialog Geschnek nicht geben   (ET:"gibGeschenkNicht")
 };
 
 #endif

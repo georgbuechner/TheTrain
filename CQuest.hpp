@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include <string>
-#include <list>
+#include <map>
 #include "CQuestStep.hpp"
 
 //Forward declarations
@@ -24,7 +24,7 @@ private:
     std::string m_sDescription; //Quest's description
     bool        m_bAchieved;    //Boolean indicating whether quest is achieved
 
-    std::list<CQuestStep*> m_listSteps;     //List of all queststeps
+    std::map<std::string, CQuestStep*> m_mapSteps;     //List of all queststeps
 
 public:
     /**
@@ -33,7 +33,7 @@ public:
     * @parameter string (Quest's name)
     * @parameter string (Quest's description)
     */
-    CQuest(std::string sID, std::string sName, std::string sDescription, std::list<CQuestStep*> steps);
+    CQuest(std::string sID, std::string sName, std::string sDescription, std::map<std::string, CQuestStep*> steps);
 
 
     // ** getter ** //
@@ -66,8 +66,8 @@ public:
     * getSteps: get map with all quest steps.
     * @return list<CQuestStep*> (List with all queststeps)
     */
-    std::list<CQuestStep*> getSteps() {
-        return m_listSteps;
+    std::map<std::string, CQuestStep*> getSteps() {
+        return m_mapSteps;
     }
 
     

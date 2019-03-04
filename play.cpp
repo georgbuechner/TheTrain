@@ -15,7 +15,6 @@ void CGame::play()
     CCommandParser parser;
 
     //Create event manager and basic eventhandlers
-    m_EM = new CEventmanager(this);
 
     //Create event handlers 
     CEventhandler* h_exits  = new CEventhandler("basic_showExits", &CEventhandler::echo_showExits);

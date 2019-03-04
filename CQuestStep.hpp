@@ -17,6 +17,7 @@ class CQuestStep
 private: 
 
     //Attributes
+    std::string m_sID;              //Queststep's id
     std::string m_sName;            //Queststep's name
     std::string m_sDescription;     //Queststep's description
     bool m_achieved;                //Indicating whether step is already solved or not
@@ -30,9 +31,10 @@ public:
     * @parameter string (step's description)
     * @parameter int (achieved)
     */
-    CQuestStep(std::string sName, std::string sDescription, bool achieved, bool active) {
+    CQuestStep(std::string id, std::string sName, std::string sDescription, bool achieved, bool active) {
 
         //Assign attributes
+        m_sID = id;
         m_sName = sName;
         m_sDescription = sDescription;
         m_achieved = achieved;
@@ -41,7 +43,14 @@ public:
 
 
     // ** getter ** //
-    
+
+    /**
+    * getID: get step's id .
+    * @return string (step's id)
+    */
+    std::string getID() {
+        return m_sID;
+    }
     /**
     * getName: get step's name.
     * @return string (step's name)
@@ -74,6 +83,24 @@ public:
         return m_active;
     }
 
+    
+    // ** setter ** // 
+
+    /**
+    * setAchieved: change status of quest: achieved/ not-achieved
+    * @parameter bool (achieved)
+    */
+    void setAchieved(bool achieved) {
+        m_achieved = achieved;
+    }
+    
+    /**
+    * setActive: change status of quest: active/ not-active
+    * @parameter bool (active)
+    */
+    void setActive(bool active) {
+        m_active= active;
+    }
 };
 
 

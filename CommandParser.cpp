@@ -19,7 +19,7 @@ CEvent* CCommandParser::parseCommand(std::string sInput)
     std::regex showcharacters("(Z|z)eige.*(P|p)ersonen.*");
     std::regex talkTo1("(S|s)(preche )(.*) an");
     std::regex talkTo2("(R|r)(ede mit )(.*)");
-    std::regex showActive("(((Z|z)eig(e?) )?.*(A|a)ktive(n?) (Q|q)uests)");
+    std::regex showActive("(((Z|z)eig(e?) )?.*((A|a)ktive(n?))? (Q|q)uests)");
     std::regex showSolved("(((Z|z)eig(e?) )?.*(G|g)elöste(n?) (Q|q)uests)");
     std::regex end("((V|v)erlasse|(B|b)eende).*(S|s)piel");
     std::regex end_direct(":q");

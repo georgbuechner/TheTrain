@@ -6,14 +6,14 @@
 * @parameter string (Quest's name)
 * parameter string (Quest's description)
 */
-CQuest::CQuest(std::string sID, std::string sName, std::string sDesc, std::list<CQuestStep*> steps)
+CQuest::CQuest(std::string sID, std::string sName, std::string sDesc, std::map<std::string, CQuestStep*> steps)
 {
     //Assign attributes
     m_sID = sID;
     m_sName = sName;
     m_sDescription = sDesc;
     m_bAchieved = false;
-    m_listSteps = steps;
+    m_mapSteps = steps;
 }
 
 
@@ -24,7 +24,7 @@ CQuest::CQuest(std::string sID, std::string sName, std::string sDesc, std::list<
 */
 void CQuest::addStep(CQuestStep* questStep)
 {
-    m_listSteps.push_back(questStep);
+    m_mapSteps.insert(std::pair<std::string, CQuestStep*>(questStep->getID(), questStep));
 }
 
 /**
@@ -38,17 +38,17 @@ void CQuest::printQuest()
     std::cout << m_sDescription << "\n";
 
     //Iterate over alls steps and print name and description
-    for(auto it=m_listSteps.begin(); it!=m_listSteps.end(); it++)
+    for(auto it=m_mapSteps.begin(); it!=m_mapSteps.end(); it++)
     {
-        if((*it)->getActive() == false)
-            break;
-        else if((*it)->getAchieved() == false)
+        if(it->second->getActive() == false)
+            continue;
+        else if(it->second->getAchieved() == false)
             std::cout << "-- (aktive): ";
         else 
             std::cout << "-- (gelöst): ";
         
-        std::cout << (*it)->getName() << "\n";
-        std::cout << (*it)->getDescription() << "\n";
+        std::cout << it->second->getName() << "\n";
+        std::cout << it->second->getDescription() << "\n";
     }
     
     std::cout << "\n";

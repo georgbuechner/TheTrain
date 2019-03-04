@@ -1,0 +1,102 @@
+[
+    {   "id": "START",
+        "text":"Started talking to Parsen Rogochin", 
+        "speaker":"STORY TELLER",
+        "playerOptions": [
+            {"keyWord": 1, "text": "Hallo, wie geht es dir?", "targetState": "wie-gehts"},
+            {"keyWord": 2, "text": "Wer bist du?", "targetState": "wer-bist-du"},
+            {"keyWord": 3, "text": "Kennst du eine Anna?", "targetState": "anna"}
+        ],
+        "end":false 
+    },
+
+    {   "id":"wie-gehts",
+        "text":"Hallo, mir geht es gut, danke der Nachfrage.",
+        "speaker":"PARSEN",
+        "playerOptions": [],
+        "end":true,
+        "dialogEnd":"Dialog ended."
+    },
+
+    {   "id": "wer-bist-du",
+        "text":"Parsen. Und du?",
+        "speaker":"PARSEN",
+        "playerOptions": [
+            {"keyWord": 1, "text": "Ich bin Jan", "targetState": "nice-to-meet-you"},
+            {"keyWord": 2, "text": "Das geht dich nichts an", "targetState": "silent-parsen"}
+        ],
+        "end":false
+    },
+
+    {
+        "id": "nice-to-meet-you",
+        "text":"Sehr erfreut. Aber ich werde jetzt weiter mein buch lesen.", 
+        "speaker":"PARSEN",
+        "playerOptions": [],
+        "end":true,
+        "dialogEnd":"Dialog enden."
+    },
+
+    {
+        "id": "silent-parsen",
+        "text":"Parsen schweigt.",
+        "speaker":"STORY TELLER",
+        "playerOptions": [],
+        "end":true,
+        "dialogEnd":"Dialog enden."
+    },
+
+
+    {   "id":"anna",
+        "text":"Ja, wieso? Ein sehr nettes Mädchen jedenfalls. Kannst du uebrigens Jay ein Packet von mir geben?",
+        "speaker":"PARSEN",
+        "playerOptions": [],
+        "end":true,
+        "dialogEnd":"Dialog endend."
+    },
+
+
+    {   "id":"wegen_geschenk",
+        "text":"Hast du Jay das Geschenk schon übergeben?",
+        "speaker":"PARSEN",
+        "playerOptions": [
+            {"keyWord": 1, "text":"Ja, habe ich", "targetState":"übergeben"},
+            {"keyWord": 2, "text":"Nein, noch nicht", "targetState":"nicht_übergeben"}
+        ],
+        "end":false
+    },
+
+    {   "id":"übergeben",
+        "text":"Ich danke dir mein Freund.",
+        "speaker":"PARSEN",
+        "playerOptions":[],
+        "end":true,
+        "dialogEnd":"Dialog ended."
+    },
+
+    {   "id":"nicht_übergeben",
+        "text":"Dann tue mir doch den gefallen und übergib es bald und noch bevor der Zug ankommt.",
+        "speaker":"PARSEN",
+        "playerOptions":[],
+        "end":true,
+        "dialogEnd":"Dialog ended."
+    },
+
+     
+    {   "id":"jays_vorwurf",
+        "text":"Ach, die Geschichte ist kompliziert. Sie will es mir  s c h w e r e r  machen. Übergeb es ihr nur, am Ende freut sie sich ja doch darüber.",
+        "speaker":"PARSEN",
+        "playerOptions":[],
+        "end":true,
+        "dialogEnd":"Dialog ended."
+    },
+
+    {   "id":"enttäuscht",
+        "text":"Ich bin ein wenig enttäuscht muss ich gestehen.",
+        "speaker":"PARSEN",
+        "playerOptions":[],
+        "end":true,
+        "dialogEnd":"Dialog ended."
+    }
+
+] 

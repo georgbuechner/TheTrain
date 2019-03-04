@@ -75,6 +75,18 @@ public:
         return m_dialog;
     }
 
+    
+    // ** setter ** //
+
+    /**
+    * setDialog: setaracter's dialog.
+    * @parameter CDialog* (pointer to dialog)
+    */
+    void setDialog(CDialog* dialog) {
+        m_dialog = dialog;
+    }
+    
+
 };
 
 #endif

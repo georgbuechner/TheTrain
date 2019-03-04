@@ -24,7 +24,7 @@
     "description":"Du betrittst dein Abteil. Ein junger Mann sitz gegen Fahrtrichtung am Fenster. Du wünscht die mit ihm ins Gespräch zu kommen.",
 
     "exits":  [ {"name":"Flur", "id":"abteil_c-flur", "to":"flur", "take":["in den Flur", "raus"]} ],
-    "characters": [ {"name":"Parsen Rogochin", "id":"parsen_rogochin", "take":["Parsen", "Parsen Rogochin", "Rogochin"], "dialog":"factory/parsenDialog.json"},
+    "characters": [ {"name":"Parsen Rogochin", "id":"parsen_rogochin", "take":["Parsen", "Parsen Rogochin", "Rogochin"], "dialog":"parsenDialog.json"},
                     {"name":"Typ", "id":"typ", "take":["Typ", "den Typ", "einen Typ"]},
                     {"name":"Axel", "id":"axel", "take":["Axel", "Götz"]} ]
 },

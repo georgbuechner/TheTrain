@@ -1,0 +1,19 @@
+[
+    {   "id":"START",
+        "text":"Started talking to Jay",
+        "speaker":"STORY TELLER",
+        "playerOptions": [
+            {"keyWord":1, "text":"Ich soll dir ein Geschenk von Parsen überbringen.", "targetState":"geschenk-geben"}
+        ],
+        "end":false
+    },
+
+    {
+        "id":"geschenk-geben",
+        "text":"Aha! Der Parsen rennt mir schon die ganze Ziet hinterher. Ich kann seine Geschenke nicht gebrauchen. Das kannst du ihm ruhig mal sagen!",
+        "speaker":"JAY",
+        "playerOptions":[],
+        "end":true,
+        "dialogEnd":"STORY TELLER: Jay scheint gereizt zu sein. Besser lässt du sie un Ruhe."
+    }
+]
