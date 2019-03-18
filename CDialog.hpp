@@ -34,12 +34,7 @@ public:
     * Constructor
     * @parameter map<string, CDialogState*> (dictionary of dialog-states)
     */
-    CDialog(std::map<std::string, CDialogState*> mapStates, CEventmanager* em) {
-
-        //Assign attributes
-        m_mapStates = mapStates;
-        m_EM = em;
-    }
+    CDialog(std::map<std::string, CDialogState*> mapStates, std::string sEventmanager);
 
     // ** Getter ** //
 

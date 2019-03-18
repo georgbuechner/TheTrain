@@ -5,11 +5,11 @@
         "description":"Parsen Rogochin, den du in deinem Abteil getroffen hast, hat dich beauftragt Jay zu suchen und ein Packet zu überbringen.",
         "steps":
         [
-            {"id":"find_jay", "name":"Finde Jay", "description":"Zuerst musst du natürlich Jay finden.", "achieved":false, "active": true},
-            {"id":"talk_to_jay", "name":"Rede mit Jay", "description":"Rede mit Jay, um ihr das Packet zu übergeben.", "achieved":false, "active":false},
-            {"id":"talk_to_parsen", "name":"Rede mit Parsen", "description":"Du solltest jetzt erst nochmal mit Parsen reden.", "achieved":false, "active":false},
-            {"id":"give_gift", "name":"Gib Jay das Geschenk", "description":"Anscheinend hat ist Parsen in Jay verliebt und versucht ihr immer wieder Geschenke zu machen. Jay mag das aber nicht.", "achieved":false, "active":false},
-            {"id":"dont_give_gif", "name":"Geschenk nicht übergeben", "description":"Anscheinend hat ist Parsen in Jay verliebt und versucht ihr immer wieder Geschenke zu machen. Jay mag das aber nicht.", "achieved":false, "active":false}
+            {"id":"find_jay", "name":"Finde Jay", "description":"Zuerst musst du natürlich Jay finden.", "achieved":false, "active": true, "funcID":"talk_to_jay_Find"},
+            {"id":"talk_to_jay", "name":"Rede mit Jay", "description":"Rede mit Jay, um ihr das Packet zu übergeben.", "achieved":false, "active":false, "funcID":"talk_to_jay_Talk"},
+            {"id":"talk_to_parsen", "name":"Rede mit Parsen", "description":"Du solltest jetzt erst nochmal mit Parsen reden.", "achieved":false, "active":false, "funcID":"talk_to_jay_Parsen"},
+            {"id":"give_gift", "name":"Gib Jay das Geschenk", "description":"Anscheinend hat ist Parsen in Jay verliebt und versucht ihr immer wieder Geschenke zu machen. Jay mag das aber nicht.", "achieved":false, "active":false, "funcID":"talk_to_jay_givePresent"},
+            {"id":"dont_give_gif", "name":"Geschenk nicht übergeben", "description":"Anscheinend hat ist Parsen in Jay verliebt und versucht ihr immer wieder Geschenke zu machen. Jay mag das aber nicht.", "achieved":false, "active":false, "funcID":"talk_to_jay_dontPresent"}
         ]
     }
 ]

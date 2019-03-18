@@ -15,6 +15,7 @@
 class CEventmanager;
 class CDialog;
 class CQuest;
+class CQuestStep;
 
 #include <iostream>
 #include <list>
@@ -25,8 +26,8 @@ class CQuest;
 #include "CPlayer.hpp"
 #include "CDialog.hpp"
 #include "CEventmanager.hpp"
-#include "CEvent.hpp"
 #include "CEventhandler.hpp"
+#include "CQuesthandler.hpp"
 #include "CCommandParser.hpp"
 #include "CQuest.hpp"
 #include "CQuestStep.hpp"
@@ -42,9 +43,10 @@ private:
     CEventmanager* m_EM;                            //Eventmanager of the game
     bool m_gameEnd;                                 //Game ended? 
 
+    std::list<CEventmanager*> m_eventmanagers;              //List of eventmanagers
+
     std::map<std::string, CRoom*> m_mapAllRooms;            //Map of all exits in the game.
     std::map<std::string, CQuest*> m_mapQuests;             //Map of all quests in the game.
-    std::map<std::string, CEventmanager*> m_dialogEvents;   //Map of all dialog eventmanagers.
 
 
 public:

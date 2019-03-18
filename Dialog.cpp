@@ -2,13 +2,28 @@
 
 #include "CDialog.hpp"
 
+
+/**
+* Constructor
+* @parameter map<string, CDialogState*> (dictionary of dialog-states)
+*/
+CDialog::CDialog(std::map<std::string, CDialogState*> mapStates, std::string sEventmanager) {
+
+    //Assign attributes
+    m_mapStates = mapStates;
+    if(m_EM->getManagers().count(sEventmanager) != 0)
+        m_EM = m_EM->getManagers().at(sEventmanager);
+    else
+        m_EM = m_EM->getManagers().at("standard");
+}
+
+
 //startDialog
 void CDialog::startDialog()
 {
     //Attributes:
     std::string sIndex = "START";   //Index points to the next state to be calles. First state
                                     //Always has the id "START"
-
 
     //Loop running till end of dialog is reached
     for(;;)

@@ -151,8 +151,12 @@ void CEventhandler::echo_showActiveQuests(CEvent* event)
     {
         if((*it)->getAchieved() == false)
             std::cout << counter << ": " << (*it)->getName() << "\n";
+        counter++;
     }
 
+    //Return if there are no active quests
+    if(counter == 1)
+        return;
 
     //Select quest for further information
     std::cout << "Wähle Quest (Nummer): ";
@@ -171,9 +175,8 @@ void CEventhandler::echo_showActiveQuests(CEvent* event)
     }
 
     //Print quest information
-    counter = 1;
     auto it = listQuests.begin();
-    advance(it, counter-1);
+    advance(it, choose-1);
     (*it)->printQuest();
 }
 
@@ -194,7 +197,13 @@ void CEventhandler::echo_showSolvedQuests(CEvent* event)
     {
         if((*it)->getAchieved() == true)
             std::cout << counter << ": " << (*it)->getName() << "\n";
+        counter++;
     }
+
+
+    //Return if there are no active quests
+    if(counter == 1)
+        return;
 
     //Select quest for further information
     std::cout << "Wähle Quest (Nummer): ";
@@ -213,9 +222,8 @@ void CEventhandler::echo_showSolvedQuests(CEvent* event)
     }
 
     //Print quest information
-    counter = 1;
     auto it = listQuests.begin();
-    advance(it, counter-1);
+    advance(it, choose-1);
     (*it)->printQuest();
 }
 
@@ -309,86 +317,6 @@ void CEventhandler::echo_parsenDialogAnna(CEvent* event)
     //Add quests tp players list of quests
     event->getGame()->getPlayer().getQuests().push_back(quest);
 }
-
-// **** **** quest eventhandlers **** **** //
-
-
-// **** factory/talk_to_jay
-
-//find jay
-void CEventhandler::echo_findJay(CEvent* event)
-{
-    //Get map of all chars in current room
-    std::map<std::string, CCharacter*> mapChars = event->getGame()->getPlayer().getCurRoom()
-                                                                                    ->getMapChars();
-    //Check whether jay is in this room
-    if(mapChars.count("jay") == 1)
-    {
-        //Get current quest step
-        CQuestStep* q_step = event->getGame()->getQuests().at("talk_to_jay")->getSteps().at("find_jay");
-
-        //Change "achieved" to true
-        q_step->setAchieved(true);
-
-        //Step status of next step to true
-        event->getGame()->getQuests().at("talk_to_jay")->getSteps().at("talk_to_jay")->setActive(true);
-
-        //If quest is already active print success
-        if(q_step->getActive() == true)
-            std::cout << "Quest step \"" << q_step->getName() << "\" succsessfull.\n";
-    }
-}
-
-
-//talk to jay
-void CEventhandler::echo_talkToJay(CEvent* event)
-{
-    //Get map of all characters in the room
-    std::map<std::string, CCharacter*> mapChars = event->getGame()->getPlayer().getCurRoom()
-                                                                                    ->getMapChars(); 
-    //Check whether jay is in this room
-    if(mapChars.count("jay") == 0)
-        return;
-     
-    //Get array of all accepted words.
-    std::vector<std::string> vTake = mapChars.at("jay")->getTake();
-
-    for(size_t it = 0; it<vTake.size(); it++)
-    {
-        //Check whether current player is selected player (use strcmp and const char*)
-        if(strcmp(event->getIdentifier().c_str(), vTake[it].c_str()) == 0) 
-        {
-            CQuestStep* q_step = event->getGame()->getQuests().at("talk_to_jay")->getSteps().at("talk_to_jay");
-            q_step->setAchieved(true);
-            if(q_step->getActive() == true)
-            {
-                std::cout << "Quest step \"" << q_step->getName() << "\" succsessfull.\n";
-            }
-            //Step status of next step to true
-            event->getGame()->getQuests().at("talk_to_jay")->getSteps().at("give_gift")->setActive(true);
-
-            //Change parsens dialog:
-            CDialog* dialog = mapChars.at("parsen_rogochin")->getDialog();
-            dialog->getStates().at("START")->getPlayerOptions().erase(3);
-            CDialogOptionState* optState = new CDialogOptionState(3, "Jay sagte mir, dass du sie bedrängst und sie es deshalb nicht annehmen wird.", "jays_vorwurf");
-            dialog->getStates().at("wegen_geschenk")->getPlayerOptions().insert(std::pair<size_t, 
-                                                        CDialogOptionState*>(3, optState));
-        }
-    }
-}
-
-//gibGeschenk
-void CEventhandler::echo_gibGeschenk(CEvent* event)
-{
-    std::cout << "DONT KNOW YET!\n";
-}
-
-//gibGeschenkNicht
-void CEventhandler::echo_gibGeschenkNicht(CEvent* event)
-{
-    std::cout << "DONT KNOW YET!\n";
-}
-
 
     
 

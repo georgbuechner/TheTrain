@@ -16,12 +16,7 @@ void CGame::worldFactory()
 {
     //***** Create Eventmanagers ****** //
     m_EM = new CEventmanager(this);
-
-    //Create eventmanagers from all dialogs
-    m_dialogEvents = emDialogsFactory();
-
-    //Create eventmanagers for all quests
-    emQuestFactory();
+    CEventmanager::initializeManagers(this);
 
     //***** Create quests *****//
     m_mapQuests = questFactory("factory/quests.json");
@@ -224,13 +219,8 @@ CDialog* CGame::dialogFactory(std::string sPath)
         mapStates.insert(std::pair<std::string, CDialogState*>(j_state["id"], state));
     }
 
-    //Create dialog eventmanager if exists
-    CEventmanager* em = new CEventmanager(this);
-    if(m_dialogEvents.count(sPath) > 0)
-        em = m_dialogEvents.at(sPath);
-
     //Create dialog
-    CDialog* dialog = new CDialog(mapStates, em);
+    CDialog* dialog = new CDialog(mapStates, sPath);
 
     //Return dialog
     return dialog;
@@ -242,6 +232,9 @@ CDialog* CGame::dialogFactory(std::string sPath)
 */
 std::map<std::string, CQuest*> CGame::questFactory(std::string sPath)
 {
+    //Initialize function pointers
+    CQuestStep::initializeFunctions();
+
     //Create map of quests
     std::map<std::string, CQuest*> mapQuests;
 
@@ -280,6 +273,11 @@ std::map<std::string, CQuest*> CGame::questFactory(std::string sPath)
 
         //Add quest to map of alle quests
         mapQuests.insert(std::pair<std::string, CQuest*> (sID, quest));
+
+        //Add eventmanager to list of eventmanagers
+        if(m_EM->getManagers().count(sID) != 0)
+            m_eventmanagers.push_back(m_EM->getManagers().at(sID));
+
     }
 
     return mapQuests;
@@ -305,9 +303,10 @@ std::map<std::string, CQuestStep*> CGame::questStepFactory(std::vector<nlohmann:
         std::string sDesc = j_step["description"];
         bool achieved     = j_step["achieved"];
         bool active       = j_step["active"];
+        std::string sFunc = j_step.value("funcID", "standard");
 
         //Create step
-        CQuestStep* step = new CQuestStep(sID, sName, sDesc, achieved, active);
+        CQuestStep* step = new CQuestStep(sID, sName, sDesc, achieved, active, sFunc);
 
         //Add step to list of steps
         mapSteps.insert(std::pair<std::string, CQuestStep*>(sID, step));

@@ -26,6 +26,7 @@ private:
 
     std::map<std::string, CQuestStep*> m_mapSteps;     //List of all queststeps
 
+
 public:
     /**
     * Constructor
@@ -70,7 +71,6 @@ public:
         return m_mapSteps;
     }
 
-    
 
     /**
     * addStep: add a step to quest.

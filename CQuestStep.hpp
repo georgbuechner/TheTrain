@@ -11,6 +11,8 @@
 
 #include <iostream>
 #include <string>
+#include <map>
+#include "CEvent.hpp"
 
 class CQuestStep
 {
@@ -22,6 +24,10 @@ private:
     std::string m_sDescription;     //Queststep's description
     bool m_achieved;                //Indicating whether step is already solved or not
     bool m_active;                  //Indicating whether step is already active or not
+    
+    void(CQuestStep::*m_func)(CEvent* event);    //Function pointer to queststep-function 
+
+    static std::map<std::string, void(CQuestStep::*)(CEvent*)> mapQuestfuncs; 
 
 public:
     
@@ -31,16 +37,10 @@ public:
     * @parameter string (step's description)
     * @parameter int (achieved)
     */
-    CQuestStep(std::string id, std::string sName, std::string sDescription, bool achieved, bool active) {
+    CQuestStep(std::string id, std::string sName, std::string sDescription, bool achieved, 
+                                                                bool active, std::string sFuncID);
 
-        //Assign attributes
-        m_sID = id;
-        m_sName = sName;
-        m_sDescription = sDescription;
-        m_achieved = achieved;
-        m_active = active;
-    }
-
+    static void initializeFunctions();
 
     // ** getter ** //
 
@@ -101,6 +101,28 @@ public:
     void setActive(bool active) {
         m_active= active;
     }
+
+
+    /** 
+    * callQuestFunction: call function of this quest step 
+    * @parameter string (Idetifier telling more about the event)
+    */
+    void callQuestFunction(CEvent* event) {
+        (this->*m_func)(event);
+    }
+
+
+
+    /** functions **/
+    void standard(CEvent* event);
+ 
+    //Quest: talk to jay
+    void talk_to_jay_Find(CEvent* event);
+    void talk_to_jay_Talk(CEvent* event);
+    void talk_to_jay_Parsen(CEvent* event);
+    void talk_to_jay_givePresent(CEvent* event);
+    void talk_to_jay_dontPresent(CEvent* event);
+
 };
 
 

@@ -57,6 +57,9 @@ void CGame::play()
         //Throw event
         m_EM->throw_event(event);
 
+        for(auto it=m_eventmanagers.begin(); it!=m_eventmanagers.end(); it++)
+            (*it)->throw_event(event);
+
         //Delete event
         delete event;
 

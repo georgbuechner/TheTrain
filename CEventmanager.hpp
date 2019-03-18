@@ -29,12 +29,20 @@ private:
     std::map<std::string, std::list<CEventhandler*>*> m_mapHandlers;   //Map with eventhandlers
     CGame* m_game;
 
+    static std::map<std::string, CEventmanager*> m_mapEMs;      //Map of all eventmanagers
+
 public:
     /**
     * Constructor
     */
     CEventmanager(CGame* game) {
         m_game = game;
+    }
+
+    static void initializeManagers(CGame* game);
+
+    std::map<std::string, CEventmanager*>& getManagers() {
+        return m_mapEMs;
     }
 
     /** 

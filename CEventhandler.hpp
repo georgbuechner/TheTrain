@@ -20,13 +20,14 @@
 #include <string>
 #include <string.h>
 #include "CGame.hpp"
-#include "CEvent.hpp"
 
 //Forward declarations
 class CEvent;
 
 class CEventhandler
 {
+protected:
+
     //Attributes
     std::string m_sID;                              //Custom id, used to remove handler from eventmanager
     void(CEventhandler::*m_func)(CEvent* event);    //Function called when handler reacts
@@ -38,10 +39,9 @@ public:
     * @parameter (CEventhandler::*m_func)(CEvent*) (function pointer of type "CEventhandler" taking an
     *                                               event from type CEvent* as parameter)
     */
-    CEventhandler(std::string sID, void(CEventhandler::*func)(CEvent* event)) {
-
-        //Assign attributes
-        m_sID = sID;
+    CEventhandler(std::string sID, void(CEventhandler::*func)(CEvent* event)) 
+    {
+        m_sID = sID; 
         m_func = func;
     }
 
@@ -60,7 +60,7 @@ public:
     * callHandlerFunction: call function of event handler 
     * @parameter CEvent* (poimnter to event that has been thrown)
     */
-    void callHandlerFunction(CEvent* event) {
+    virtual void callHandlerFunction(CEvent* event) {
         (this->*m_func)(event);
     }
 
@@ -83,14 +83,32 @@ public:
     //factory/parsenDialog.json"
     void echo_parsenDialogAnna(CEvent* event);
 
-    
-    // ** quest handlers ** //
-    
-    //talk_to_jay
-    void echo_findJay(CEvent* event);           //Has Jay been found?       (ET: "showChars")
-    void echo_talkToJay(CEvent* event);         //Started talking to Jay?   (ET: "talkTo") 
-    void echo_gibGeschenk(CEvent* event);       //Dialog Geschenk geben     (ET: "gibGeschenk") 
-    void echo_gibGeschenkNicht(CEvent* event);  //Dialog Geschnek nicht geben   (ET:"gibGeschenkNicht")
 };
+
+class CQuesthandler : public CEventhandler
+{
+private: 
+
+    //Attributes
+    std::string m_sQuest;         //Id linking to quest
+    std::string m_sQuestStep;     //ID linking to queststep
+    void(CQuesthandler::*m_func2)(CEvent* event);
+ 
+public:
+    
+    CQuesthandler(std::string sId, std::string sQuest, std::string sQuestStep);
+
+    /** 
+    * callHandlerFunction: call function of event handler 
+    * @parameter CEvent* (poimnter to event that has been thrown)
+    */
+    void callHandlerFunction(CEvent* event) {
+        (this->*m_func2)(event);
+    }
+    // ** quest handlers **//
+    
+    void echo_callQuest(CEvent* event);
+};
+
 
 #endif
