@@ -24,7 +24,7 @@ CQuest::CQuest(std::string sID, std::string sName, std::string sDesc, std::map<s
 */
 void CQuest::addStep(CQuestStep* questStep)
 {
-    m_mapSteps.insert(std::pair<std::string, CQuestStep*>(questStep->getID(), questStep));
+    m_mapSteps[questStep->getID()] = questStep;
 }
 
 /**

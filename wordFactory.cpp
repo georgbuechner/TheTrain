@@ -84,7 +84,7 @@ std::map<std::string, CRoom*> CGame::roomFactory(std::string sPath)
         CRoom* room = new CRoom(j_room["name"], j_room["description"], mapExits, mapCharacters);
 
         //Add room to map of all rooms
-        mapRooms.insert(std::pair<std::string, CRoom*>(j_room["id"], room));
+        mapRooms[j_room["id"]] =  room;
 
         std::cout << j_room["name"] << " parsed successfully! \n";
     }
@@ -122,7 +122,7 @@ std::map<size_t, CExit*> CGame::exitFactory(nlohmann::json j_listExits)
         CExit* exit = new CExit(sName, sID, sToRoom, vTake, sHeadDesc, sFootDesc, sAltDesc);
 
         //Insert exit into dictionary of exits in a room
-        mapExits.insert(std::pair<size_t, CExit*>(it, exit)); 
+        mapExits[it] = exit;
     }
 
     return mapExits;
@@ -157,10 +157,10 @@ std::map<std::string, std::string> CGame::characterFactory(nlohmann::json j_list
         CCharacter* character = new CCharacter(sName, sID, vTake, dialog);
 
         //Insert character into dictionary of characters in a room
-        mapCharacters.insert(std::pair<std::string, std::string>(sID, sName));
+        mapCharacters[sID] = sName;
 
         //Insert character into dictionry of all characters in game
-        m_mapAllChars.insert(std::pair<std::string, CCharacter*>(sID, character));
+        m_mapAllChars[sID] = character;
     }
 
     return mapCharacters;
@@ -205,7 +205,7 @@ CDialog* CGame::dialogFactory(std::string sPath)
                             j_state.value("dialogEnd", ""), listOptStates, j_state["end"]);
 
         //Add state to list of states
-        mapStates.insert(std::pair<std::string, CDialogState*>(j_state["id"], state));
+        mapStates[j_state["id"]] = state;
     }
 
     //Create dialog
@@ -290,7 +290,7 @@ std::map<std::string, CQuest*> CGame::questFactory(std::string sPath)
         CQuest* quest = new CQuest(sID, sName, sDescription, questSteps);
 
         //Add quest to map of alle quests
-        mapQuests.insert(std::pair<std::string, CQuest*> (sID, quest));
+        mapQuests[sID] = quest;
 
         //Add eventmanager to list of eventmanagers
         if(m_EM->getManagers().count(sID) != 0)
@@ -327,7 +327,7 @@ std::map<std::string, CQuestStep*> CGame::questStepFactory(std::vector<nlohmann:
         CQuestStep* step = new CQuestStep(sID, sName, sDesc, achieved, active, sFunc);
 
         //Add step to list of steps
-        mapSteps.insert(std::pair<std::string, CQuestStep*>(sID, step));
+        mapSteps[sID] = step;
     }
 
     return mapSteps;

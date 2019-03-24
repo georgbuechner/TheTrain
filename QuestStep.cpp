@@ -31,18 +31,12 @@ void CQuestStep::initializeFunctions()
     // **** Add quests to map **** //
 
     //Quest: talk to jay
-    mapQuestfuncs.insert(std::pair<std::string, void(CQuestStep::*)(CEvent*)>
-                                    ("standard", &CQuestStep::standard));
-    mapQuestfuncs.insert(std::pair<std::string, void(CQuestStep::*)(CEvent*)> 
-                                    ("talk_to_jay_Find", &CQuestStep::talk_to_jay_Find));
-    mapQuestfuncs.insert(std::pair<std::string, void(CQuestStep::*)(CEvent*)> 
-                                    ("talk_to_jay_Talk", &CQuestStep::talk_to_jay_Talk));
-    mapQuestfuncs.insert(std::pair<std::string, void(CQuestStep::*)(CEvent*)>
-                                    ("talk_to_jay_Parsen", &CQuestStep::talk_to_jay_Parsen));
-    mapQuestfuncs.insert(std::pair<std::string, void(CQuestStep::*)(CEvent*)> 
-                                    ("talk_to_jay_givePresent", &CQuestStep::talk_to_jay_givePresent));
-    mapQuestfuncs.insert(std::pair<std::string, void(CQuestStep::*)(CEvent*)> 
-                                    ("talk_to_jay_dontPresent", &CQuestStep::talk_to_jay_dontPresent));
+    mapQuestfuncs["standard"] = &CQuestStep::standard;
+    mapQuestfuncs["talk_to_jay_Find"] = &CQuestStep::talk_to_jay_Find;
+    mapQuestfuncs["talk_to_jay_Talk"] = &CQuestStep::talk_to_jay_Talk;
+    mapQuestfuncs["talk_to_jay_Parsen"] = &CQuestStep::talk_to_jay_Parsen;
+    mapQuestfuncs["talk_to_jay_givePresent"] = &CQuestStep::talk_to_jay_givePresent;
+    mapQuestfuncs["talk_to_jay_dontPresent"] = &CQuestStep::talk_to_jay_dontPresent;
 }
 
 

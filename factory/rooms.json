@@ -14,7 +14,7 @@
     "id":"abteil_b", 
     "description":"Du betrittst Abteil B. Das Abteil ist leer.",
 
-    "exits":  [ {"name":"Flur","id":"abteil_b-flur", "to":"flur", "take":["in den Flur", "raus"]} ],
+    "exits":  [ {"name":"Flur","id":"abteil_b-flur", "to":"flur", "take":["in den Flur", "raus"], "altDescription": "du betrittst den Flur und stößt dir den Kopf and der Tür."} ],
     "characters": [ {"name":"Jay", "id":"jay", "take":["Jay"]} ]
 },
 
@@ -62,7 +62,7 @@
     "exits":
     [
         {"name":"Abteil-A", "id":"flur-abteil_a", "to":"abteil_a", "take":["in Abteil-A"]}, 
-        {"name":"Abteil-B", "id":"flur-abteil_b", "to":"abteil_b", "take":["in Abteil-B"], "altDescription": "du betrittst Abteil B und stößt dir den Kopf and der Tür."}, 
+        {"name":"Abteil-B", "id":"flur-abteil_b", "to":"abteil_b", "take":["in Abteil-B"]},
         {"name":"Abteil-C", "id":"flur-abteil_c", "to":"abteil_c", "take":["in Abteil-C"]}, 
         {"name":"Abteil-D", "id":"flur-abteil_d", "to":"abteil_d", "take":["in Abteil-D"]},
         {"name":"Abteil-E", "id":"flur-abteil_e", "to":"abteil_e", "take":["in Abteil-E"]}

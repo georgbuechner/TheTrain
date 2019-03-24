@@ -21,8 +21,7 @@ void CEventmanager::add_listener(std::string sEventType, CEventhandler* handler)
         listEventhandlers->push_back(handler);
         
         //Add  
-        m_mapHandlers.insert(std::pair<std::string, std::list<CEventhandler*>*>
-                                                    (sEventType, listEventhandlers));
+        m_mapHandlers[sEventType] = listEventhandlers;
     }
 
     //Add event to existing entry
@@ -85,7 +84,7 @@ void CEventmanager::initializeManagers(CGame* game)
 {
     // ***** Standard ***** //
     CEventmanager* em = new CEventmanager(game);
-    m_mapEMs.insert(std::pair<std::string, CEventmanager*>("standard", em));
+    m_mapEMs["standard"] = em;
 
     // ***** Dialog ***** //
 
@@ -97,8 +96,7 @@ void CEventmanager::initializeManagers(CGame* game)
     em1->add_listener("anna", h_anna);
 
     //Add to list
-    m_mapEMs.insert(std::pair<std::string, CEventmanager*> 
-                                        ("factory/Dialogs/parsenDialog.json", em1));
+    m_mapEMs["factory/Dialogs/parsenDialog.json"] = em1;
 
 
     // ***** Quests ***** //
@@ -128,7 +126,7 @@ void CEventmanager::initializeManagers(CGame* game)
                                                                 &CEventhandler::echo_gibGeschenkNicht);
     em->add_listener("gibGeschenkNicht", h_geschenkNichtGeben); */
 
-    m_mapEMs.insert(std::pair<std::string, CEventmanager*>("talk_to_jay", em2));
+    m_mapEMs["talk_to_jay"] = em2;
 }
 
 
