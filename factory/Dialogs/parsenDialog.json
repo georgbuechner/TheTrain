@@ -3,9 +3,10 @@
         "text":"Started talking to Parsen Rogochin", 
         "speaker":"STORY TELLER",
         "playerOptions": [
-            {"keyWord": 1, "text": "Hallo, wie geht es dir?", "targetState": "wie-gehts"},
-            {"keyWord": 2, "text": "Wer bist du?", "targetState": "wer-bist-du"},
-            {"keyWord": 3, "text": "Kennst du eine Anna?", "targetState": "anna"}
+            {"keyWord":1, "text": "Hallo, wie geht es dir?", "targetState": "wie-gehts", "active":true},
+            {"keyWord":2, "text": "Wer bist du?", "targetState": "wer-bist-du", "active":true},
+            {"keyWord":3, "text": "Kennst du eine Anna?", "targetState": "anna", "active":true},
+            {"keyWord":3, "text": "Wegen Geschenk...", "targetState":"wegen_geschenk", "active":false}
         ],
         "end":false 
     },
@@ -22,8 +23,8 @@
         "text":"Parsen. Und du?",
         "speaker":"PARSEN",
         "playerOptions": [
-            {"keyWord": 1, "text": "Ich bin Jan", "targetState": "nice-to-meet-you"},
-            {"keyWord": 2, "text": "Das geht dich nichts an", "targetState": "silent-parsen"}
+            {"keyWord":1, "text": "Ich bin Jan", "targetState": "nice-to-meet-you", "active":true},
+            {"keyWord":2, "text": "Das geht dich nichts an", "targetState": "silent-parsen", "active":true}
         ],
         "end":false
     },
@@ -60,8 +61,9 @@
         "text":"Hast du Jay das Geschenk schon übergeben?",
         "speaker":"PARSEN",
         "playerOptions": [
-            {"keyWord": 1, "text":"Ja, habe ich", "targetState":"übergeben"},
-            {"keyWord": 2, "text":"Nein, noch nicht", "targetState":"nicht_übergeben"}
+            {"keyWord":1, "text":"Ja, habe ich", "targetState":"übergeben", "active":true},
+            {"keyWord":2, "text":"Nein, noch nicht", "targetState":"nicht_übergeben", "active":true},
+            {"keyWord":3, "text":"Jay sagt mir, dass du sie bedrängst und sie es deshalb nicht annehmen wird.", "targetState":"jays_vorwurf", "active":false}
         ],
         "end":false
     },
@@ -98,5 +100,4 @@
         "end":true,
         "dialogEnd":"Dialog ended."
     }
-
 ] 

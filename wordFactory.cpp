@@ -78,7 +78,7 @@ std::map<std::string, CRoom*> CGame::roomFactory(std::string sPath)
 
         //Create all people and store in map of people
         std::vector<nlohmann::json> j_listCharacters= j_room["characters"];
-        std::map<std::string, CCharacter*> mapCharacters = characterFactory(j_listCharacters);
+        std::map<std::string, std::string> mapCharacters = characterFactory(j_listCharacters);
     
         //Create room
         CRoom* room = new CRoom(j_room["name"], j_room["description"], mapExits, mapCharacters);
@@ -133,10 +133,10 @@ std::map<size_t, CExit*> CGame::exitFactory(nlohmann::json j_listExits)
 * @parameter nlohmann::json (a json with a list of json-objects (each object is one character)
 * @return map<string, CCharacter*> (map of all characters created)
 */
-std::map<std::string, CCharacter*> CGame::characterFactory(nlohmann::json j_listCharacters)
+std::map<std::string, std::string> CGame::characterFactory(nlohmann::json j_listCharacters)
 {
     //Create empty map of exits 
-    std::map<std::string, CCharacter*> mapCharacters;
+    std::map<std::string, std::string> mapCharacters;
 
     //Iterate over all exits and create each person
     for(size_t it = 0; it<j_listCharacters.size(); it++)
@@ -157,7 +157,10 @@ std::map<std::string, CCharacter*> CGame::characterFactory(nlohmann::json j_list
         CCharacter* character = new CCharacter(sName, sID, vTake, dialog);
 
         //Insert character into dictionary of characters in a room
-        mapCharacters.insert(std::pair<std::string, CCharacter*>(sID, character));
+        mapCharacters.insert(std::pair<std::string, std::string>(sID, sName));
+
+        //Insert character into dictionry of all characters in game
+        m_mapAllChars.insert(std::pair<std::string, CCharacter*>(sID, character));
     }
 
     return mapCharacters;
@@ -196,25 +199,11 @@ CDialog* CGame::dialogFactory(std::string sPath)
         //Create json of current state
         nlohmann::json j_state = v_states[it];
 
-        //Create map of option states
-        std::vector<nlohmann::json> v_optStates = j_state["playerOptions"];
-        std::map<size_t, CDialogOptionState*> mapOptStates;
-        for(size_t yt=0; yt<v_optStates.size(); yt++)
-        {
-            //Create json of current option state
-            nlohmann::json j_optState = v_optStates[yt];
-
-            //Create option state
-            CDialogOptionState* optState = new CDialogOptionState(j_optState["keyWord"], 
-                                                    j_optState["text"], j_optState["targetState"]);
-            //Insert option state into map of option states
-            mapOptStates.insert(std::pair<size_t, CDialogOptionState*>(j_optState["keyWord"], 
-                                                                                        optState));
-        }
-
+        std::list<CDialogOptionState*> listOptStates = dialogOptStateFactory(j_state["playerOptions"]);     
         //Create state
         CDialogState* state = new CDialogState(j_state["id"], j_state["text"], j_state["speaker"], 
-                            j_state.value("dialogEnd", ""), mapOptStates, j_state["end"]);
+                            j_state.value("dialogEnd", ""), listOptStates, j_state["end"]);
+
         //Add state to list of states
         mapStates.insert(std::pair<std::string, CDialogState*>(j_state["id"], state));
     }
@@ -224,6 +213,35 @@ CDialog* CGame::dialogFactory(std::string sPath)
 
     //Return dialog
     return dialog;
+}
+
+/**
+* dialogOptionstateFactory: parse list of option states and return a map 
+* @parameter vector<json> (list of jsons)
+* @return map<string, CDialogOptionState> (Map of optionstates)
+*/
+std::list<CDialogOptionState*> CGame::dialogOptStateFactory(std::vector<nlohmann::json> v_optStates)
+{
+    //Create map of option states
+    std::list<CDialogOptionState*> listOptStates;
+    for(size_t it=0; it<v_optStates.size(); it++)
+    {
+        //Create json of current option state
+        nlohmann::json j_optState = v_optStates[it];
+
+        size_t keyword = j_optState["keyWord"];
+        std::string sText = j_optState["text"];
+        std::string sTarget = j_optState["targetState"];
+        bool active = j_optState["active"];
+
+        //Create option stateA
+        CDialogOptionState* optState = new CDialogOptionState(keyword, sText, sTarget, active);
+
+        //Insert option state into map of option states
+        listOptStates.push_back(optState);
+    }
+
+    return listOptStates;
 }
  
 

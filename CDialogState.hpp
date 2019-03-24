@@ -10,7 +10,7 @@
 #define CDIALOGSTATE_H
 
 #include <iostream>
-#include <map>
+#include <list>
 #include <string>
 #include "CDialogOptionState.hpp"
 
@@ -25,7 +25,7 @@ private:
     std::string m_sSpeaker;     //String of person who is speaking
     std::string m_sDialogEnd;   //Text to print in case this is last state
    
-    std::map<size_t, CDialogOptionState*> m_playerOptions;   //Player options
+    std::list<CDialogOptionState*> m_playerOptions;   //Player options
 
     bool m_end;             //Dialog ended?
 
@@ -40,7 +40,7 @@ public:
     * @parameter bool (boolean indicating whether dialog hast enden)
     */
     CDialogState(std::string sID, std::string sText, std::string sSpeaker, std::string sDialogEnd, 
-            std::map<size_t, CDialogOptionState*> playerOptions, bool end) {
+            std::list<CDialogOptionState*> playerOptions, bool end) {
 
         //Assign attributes
         m_sID = sID;
@@ -89,7 +89,7 @@ public:
     * getPlayerOptions: get map of option-states (options the player has)
     * @return map<size_t, CDialogOptionState*> (map of option-states)
     */
-    std::map<size_t, CDialogOptionState*>& getPlayerOptions() {
+    std::list<CDialogOptionState*>& getPlayerOptions() {
         return m_playerOptions;
     }
 
@@ -99,6 +99,22 @@ public:
     */
     bool getEnd() {
         return m_end;
+    }
+
+    /**
+    * getOptionState: return a state from map of optionstates
+    * @parameter size_t (keyWord)
+    * @parameter bool (active yes/no) 
+    * @return CDialogOptionState 
+    */
+    CDialogOptionState* getOptState(size_t keyword, bool active) {
+        for(auto it=m_playerOptions.begin(); it!=m_playerOptions.end(); it++)
+        {
+            if((*it)->getKeyword() == keyword && (*it)->getActive() == active)
+                return (*it);
+        }
+
+        return NULL;
     }
 };
 

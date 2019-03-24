@@ -38,7 +38,7 @@ public:
     * @parameter int (achieved)
     */
     CQuestStep(std::string id, std::string sName, std::string sDescription, bool achieved, 
-                                                                bool active, std::string sFuncID);
+                                                  bool active, std::string sFuncID);
 
     static void initializeFunctions();
 

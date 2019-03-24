@@ -24,7 +24,7 @@ private:
     std::string m_sDescription;                     //Room description
 
     std::map<size_t, CExit*> m_mapOfExits;                  //List of exits leading out of this room 
-    std::map<std::string, CCharacter*> m_mapOfCharacters;   //List of people in the room
+    std::map<std::string, std::string> m_mapOfCharacters;   //List of people in the room
 
 public:
     /**
@@ -35,7 +35,7 @@ public:
     * @parameter map<string, CCharacter*>   (map with all characters)
     */
     CRoom(std::string sName, std::string sDescription,  std::map<size_t, CExit*> mapExits, 
-          std::map<std::string, CCharacter*> mapCharacters) {
+          std::map<std::string, std::string> mapCharacters) {
 
         m_sName         = sName;
         m_sDescription  = sDescription;
@@ -73,7 +73,7 @@ public:
     * getMapChars: get map of all people in the room.
     * @return map<string, CCharacter*> (map of all the room's characters)
     */
-    std::map<std::string, CCharacter*>& getMapChars() {
+    std::map<std::string, std::string>& getMapChars() {
         return m_mapOfCharacters;
     }
 };

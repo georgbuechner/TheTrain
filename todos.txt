@@ -1,0 +1,6 @@
+General
+-- change "insert" to []-operator
+CExit.h
+-- add functionpointers for events
+
+

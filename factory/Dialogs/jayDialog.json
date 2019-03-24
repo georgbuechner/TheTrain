@@ -3,7 +3,7 @@
         "text":"Started talking to Jay",
         "speaker":"STORY TELLER",
         "playerOptions": [
-            {"keyWord":1, "text":"Ich soll dir ein Geschenk von Parsen überbringen.", "targetState":"geschenk-geben"}
+            {"keyWord":1, "text":"Ich soll dir ein Geschenk von Parsen überbringen.", "targetState":"geschenk-geben", "active":true}
         ],
         "end":false
     },

@@ -69,30 +69,35 @@ void CQuestStep::standard(CEvent*) {
 void CQuestStep::talk_to_jay_Find(CEvent* event) 
 {
     //Get map of all chars in current room
-    std::map<std::string, CCharacter*> mapChars = event->getGame()->getPlayer().getCurRoom()
-                                                                                    ->getMapChars();
+    std::map<std::string, std::string> mapChars = event->getGame()->getPlayer().getCurRoom()->getMapChars();
+
     //Check whether jay is in this room
     if(mapChars.count("jay") == 1)
     {
-        //Change "achieved" to true
-        m_achieved = true;
-
-        if(m_active == false || m_achieved == false)
-                return
+        if(m_active == false || m_achieved == true)
+            return;
 
         //Step status of next step to true
         event->getGame()->getQuests().at("talk_to_jay")->getSteps().at("talk_to_jay")->setActive(true);
 
         //If quest is already active print success
         std::cout << "Quest step \"" << m_sName << "\" succsessfull.\n";
+
+        //Change "achieved" to true
+        m_achieved = true;
     }
 }
 
 void CQuestStep::talk_to_jay_Talk(CEvent* event) 
 {
+    //Get map of queststeps
+    std::map<std::string, CQuestStep*> map_steps = event->getGame()
+                                                        ->getQuests().at("talk_to_jay")->getSteps(); 
+
     //Get map of all characters in the room
-    std::map<std::string, CCharacter*> mapChars = event->getGame()->getPlayer().getCurRoom()
-                                                                                    ->getMapChars(); 
+    std::map<std::string, std::string> mapCharsRoom = event->getGame()->getPlayer().getCurRoom()->getMapChars(); 
+    //Get map of all characters
+    std::map<std::string, CCharacter*> mapChars = event->getGame()->getMapChars();
 
     //Check whether jay is in this room
     if(mapChars.count("jay") == 0)
@@ -106,25 +111,32 @@ void CQuestStep::talk_to_jay_Talk(CEvent* event)
         //Check whether current player is selected player (use strcmp and const char*)
         if(strcmp(event->getIdentifier().c_str(), vTake[it].c_str()) == 0) 
         {
-            m_achieved = true;
+            if(m_achieved == true)
+                return;
 
-            if(m_active == false || m_achieved == false)
-                return
+            CQuestStep* findJay = map_steps.at("find_jay");
+            if(findJay->getAchieved() == false)
+            {
+                findJay->setAchieved(true);
+                std::cout << "Quest step \"" << findJay->getName() << "\" succsessfull.\n";
+                m_active = true;
+            }
 
             //Print that quest has been succsessfull
             std::cout << "Quest step \"" << m_sName << "\" succsessfull.\n";
 
             //Step status of next step to true
-            event->getGame()->getQuests().at("talk_to_jay")
-                                    ->getSteps().at("talk_to_parsen")->setActive(true);
+            map_steps.at("talk_to_parsen")->setActive(true);
 
             //Change parsens dialog:
-            CDialog* dialog = event->getGame()->getMapRooms().at("abteil_c")
-                                                    ->getMapChars().at("parsen_rogochin")->getDialog();
-            dialog->getStates().at("wegen_geschenk")->getPlayerOptions().erase(3);
-            CDialogOptionState* optState = new CDialogOptionState(3, "Jay sagte mir, dass du sie bedrängst und sie es deshalb nicht annehmen wird.", "jays_vorwurf");
-            dialog->getStates().at("wegen_geschenk")->getPlayerOptions().insert(std::pair<size_t, 
-                                                        CDialogOptionState*>(3, optState));
+            CDialog* dialog = mapChars.at("parsen_rogochin")->getDialog();
+            dialog->getStates().at("wegen_geschenk")->getOptState(3, false)->setActive(true);
+
+            //Change Jays dialog
+            event->getGame()->getMapChars().at("jay")->setDialog(event->getGame()->dialogFactory("factory/Dialogs/defaultDialog.json"));
+
+            //Change "achieved" to true 
+            m_achieved = true;
         }
     }
 }

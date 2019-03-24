@@ -46,6 +46,7 @@ private:
     std::list<CEventmanager*> m_eventmanagers;              //List of eventmanagers
 
     std::map<std::string, CRoom*> m_mapAllRooms;            //Map of all exits in the game.
+    std::map<std::string, CCharacter*> m_mapAllChars;       //Map of all chars in the game.
     std::map<std::string, CQuest*> m_mapQuests;             //Map of all quests in the game.
 
 
@@ -86,6 +87,13 @@ public:
         return m_mapAllRooms;
     }
 
+    /**
+    * getMapChars: return map of all characters 
+    * @return map<string, CCharacter*> (map of all chars in the game)
+    */
+    std::map<std::string, CCharacter*>& getMapChars() {
+        return m_mapAllChars;
+    }
     /**
     * getQuets: return map of all quests 
     * @return map<string, CQuets*> (map of all quests in the game)
@@ -141,7 +149,7 @@ public:
     * @parameter nlohmann::json (a json with a list of json-objects (each object is one character)
     * @return map<string, CCharacter*> (map of all characters created)
     */
-    std::map<std::string, CCharacter*> characterFactory(nlohmann::json j_listCharacters);   
+    std::map<std::string, std::string> characterFactory(nlohmann::json j_listCharacters);   
 
     /** 
     * emDialogsFactory: create all dialog eventmanagers.
@@ -160,6 +168,13 @@ public:
     * @return CDialog* (Parsed dialog)
     */
     CDialog* dialogFactory(std::string sPath);
+
+    /**
+    * dialogOptStateFactory: parse list of option states and return a map 
+    * @parameter vector<json> (list of jsons)
+    * @return map<string, CDialogOptionState> (Map of optionstates)
+    */
+    std::list<CDialogOptionState*> dialogOptStateFactory(std::vector<nlohmann::json> v_optStates);
 
     /**
     * questFactory: creates all quests in game.

@@ -50,6 +50,8 @@ public:
     * startDialog: function starting and running dialog
     */
     void startDialog();
+
+    bool is_number(const std::string& s);
 };
 
     

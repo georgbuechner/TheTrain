@@ -88,12 +88,12 @@ void CEventhandler::echo_showChars(CEvent* event)
             
     //Iterate over map of characters in room and print name. Add a number infront of each character 
     std::cout << "People in the room: \n";
-    std::map<std::string, CCharacter*> mapChars = event->getGame()->getPlayer().getCurRoom()
+    std::map<std::string, std::string> mapChars = event->getGame()->getPlayer().getCurRoom()
                                                                                     ->getMapChars();
     for(auto it=mapChars.begin(); it!=mapChars.end(); it++)
     {
         counter++;
-        std::cout << counter << ": " << it->second->getName() << ".\n";
+        std::cout << counter << ": " << it->second << ".\n";
     }
 
     std::cout << "\n";
@@ -108,14 +108,14 @@ void CEventhandler::echo_showChars(CEvent* event)
 void CEventhandler::echo_talkTo(CEvent* event)
 {
     //Get map of characters in room
-    std::map<std::string, CCharacter*> mapChars = event->getGame()->getPlayer().getCurRoom()
+    std::map<std::string, std::string> mapChars = event->getGame()->getPlayer().getCurRoom()
                                                                                     ->getMapChars();
 
     //Iterate over map of characters and call dialog
     for(auto it=mapChars.begin(); it!=mapChars.end(); it++)
     {
         //Get array of all accepted words.
-        std::vector<std::string> vTake = it->second->getTake();
+        std::vector<std::string> vTake = event->getGame()->getMapChars().at(it->first)->getTake();
 
         //Iterate over accepted words and check whether they match with identifier.
         for(size_t yt = 0; yt < vTake.size(); yt++)
@@ -124,7 +124,7 @@ void CEventhandler::echo_talkTo(CEvent* event)
             if(strcmp(event->getIdentifier().c_str(), vTake[yt].c_str()) == 0) 
             {
                 //Call dialog of selected character
-                it->second->getDialog()->startDialog();
+                event->getGame()->getMapChars().at(it->first)->getDialog()->startDialog();
                 return;
             }
         }
@@ -299,20 +299,20 @@ void CEventhandler::echo_parsenDialogAnna(CEvent* event)
 
 
     //Change dialog of Jay.
-    event->getGame()->getMapRooms().at("abteil_b")->getMapChars().at("jay")->setDialog(event->getGame()->dialogFactory("factory/Dialogs/jayDialog.json"));
+    event->getGame()->getMapChars().at("jay")->setDialog(event->getGame()->dialogFactory("factory/Dialogs/jayDialog.json"));
 
 
     //Change dialog of parsen
-    CDialog* dialog = event->getGame()->getMapRooms().at("abteil_c")
-                                            ->getMapChars().at("parsen_rogochin")->getDialog();
-
-    //Delete old state 3
-    dialog->getStates().at("START")->getPlayerOptions().erase(3);
+    CDialog* dialog = event->getGame()->getMapChars().at("parsen_rogochin")->getDialog();
 
     //Add new option state 3
-    CDialogOptionState* optState = new CDialogOptionState(3, "Wegen dem Geschenk...", "wegen_geschenk");
-    dialog->getStates().at("START")->getPlayerOptions().insert(std::pair<size_t, CDialogOptionState*> 
-                                                                            (3, optState));
+    CDialogOptionState* optState = dialog->getStates().at("START")->getOptState(3, false);
+
+    //Delete old state 3
+    dialog->getStates().at("START")->getOptState(3, true)->setActive(false);
+
+    //Change new optionstate to true
+    optState->setActive(true);
 
     //Add quests tp players list of quests
     event->getGame()->getPlayer().getQuests().push_back(quest);

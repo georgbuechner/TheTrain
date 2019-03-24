@@ -14,33 +14,36 @@
 class CDialogOptionState
 {
 private:
-    size_t m_id;                //ID
+    size_t m_keyword;           //Keyword
     std::string m_sText;        //Text
     std::string m_sTargetState; //State this state is linking to
+    bool m_bActive;             //Indicating whether this options is already active
 
 public:
     /**
     * Constructor
-    * @parameter size_t (custom id)
+    * @parameter size_t (keyword)
     * @parameter string (text player can say)
     * @parameter string (id linking to next state)
+    * @parameter bool (active yes/no)
     */
-    CDialogOptionState(size_t id, std::string sText, std::string sTargetState) {
+    CDialogOptionState(size_t keyword, std::string sText, std::string sTargetState, bool active) {
 
         //Assign attributes
-        m_id = id;
+        m_keyword = keyword;
         m_sText = sText;
         m_sTargetState = sTargetState;
+        m_bActive = active;
     }
 
     // *** getter *** //
     
     /**
-    * getID: get optionstate's id.
-    * @return size_t (state's custom id)
+    * getKeyword: get optionstate's keyword.
+    * @return size_t (state's keyword)
     */
-    size_t getID() {
-        return m_id;
+    size_t getKeyword() {
+        return m_keyword;
     }
 
     /**
@@ -57,6 +60,24 @@ public:
     */
     std::string getTargetState() {
         return m_sTargetState;
+    }
+
+    /**
+    * getActive: get boolean indicating whether this state is already active
+    * @return bool (active yes/no)
+    */
+    bool getActive() {
+        return m_bActive;
+    }
+
+    // *** setter *** //
+    
+    /**
+    * setActive: change status of option state
+    * @parameter bool 
+    */
+    void setActive(bool active) {
+        m_bActive = active;
     }
 };
 

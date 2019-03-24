@@ -47,24 +47,52 @@ void CDialog::startDialog()
         }
 
         //Print options
-        std::map<size_t, CDialogOptionState*> mapPlayerOptions = curState->getPlayerOptions();
-        for(auto it=mapPlayerOptions.begin(); it!=mapPlayerOptions.end(); it++)
-            std::cout << it->second->getID() << ": " << it->second->getText() << "\n";
-        
-        //Player option
-        std::string sChoice;
-        size_t choice;
-        std::cout << ">"; 
-        
-        getline(std::cin, sChoice);
-        choice = std::stoi(sChoice);
-        
-        //If choice is within range, print player's text, then change index to target state
-        if(choice <= mapPlayerOptions.size())
+        std::list<CDialogOptionState*> listPlayerOptions = curState->getPlayerOptions();
+        for(auto it=listPlayerOptions.begin(); it!=listPlayerOptions.end(); it++)
         {
-            std::cout << "PLAYER  " << mapPlayerOptions.at(choice)->getText() << "\n";
-            sIndex.assign(mapPlayerOptions.at(choice)->getTargetState());
+            if((*it)->getActive() == true)
+                std::cout << (*it)->getKeyword() << ": " << (*it)->getText() << "\n";
+        }
+        
+        bool input = false;
+        while(input == false)
+        {
+            //Player option
+            std::string sChoice;
+            size_t choice;
+            std::cout << ">"; 
+            
+            getline(std::cin, sChoice);
+
+            //Convert to int
+            if(is_number(sChoice) == false)
+            {
+                std::cout << "Wrong input! Enter a number.\n";
+                continue;
+            }
+            choice = std::stoi(sChoice);
+
+            //If choice is within range, print player's text, then change index to target state
+            CDialogOptionState* optState = curState->getOptState(choice, true);
+
+            //Check whether state exists
+            if(!optState)
+            {
+                std::cout << "Wrong input! Enter a number.\n";
+                continue;
+            }
+
+            //Print players text and change index to target state
+            std::cout << "PLAYER  " << curState->getOptState(choice, true)->getText() << "\n";
+            sIndex.assign(curState->getOptState(choice, true)->getTargetState());
+            input = true;
         }
      }
+}
+ 
+bool CDialog::is_number(const std::string& s)
+{
+    return !s.empty() && std::find_if(s.begin(),
+        s.end(), [](char c) { return !std::isdigit(c); }) == s.end();
 }
  
