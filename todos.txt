@@ -1,6 +1,8 @@
-General
--- change "insert" to []-operator
 CExit.h
 -- add functionpointers for events
+Contexts
+1. Move map of eventmanagers to player.
+2. Change game to "world"
+3. Add contexts 
 
 

@@ -29,6 +29,8 @@ private:
     std::map<std::string, CDialogState*> m_mapStates;   //Map containing all states of dialog
     CEventmanager* m_EM;
 
+    static std::map<std::string, void(CDialog::*)(CDialogState*)> mapDialogFuncs;
+
 public:
     /**
     * Constructor
@@ -36,6 +38,7 @@ public:
     */
     CDialog(std::map<std::string, CDialogState*> mapStates, std::string sEventmanager);
 
+    
     // ** Getter ** //
 
     /**
@@ -52,6 +55,24 @@ public:
     void startDialog();
 
     bool is_number(const std::string& s);
+
+    
+    // *** Functions *** //
+
+    /**
+    * initializeFunctions: adds all functions to map of dialog-state-functions.
+    */
+    static void initializeFunctions();
+
+    /**
+    * callStateFunction: call function of given state
+    * parameter CDialogState* (dialog state)
+    */
+    void callStateFunction(CDialogState* state) {
+        (this->*mapDialogFuncs.at(state->getFunction()))(state);
+    }
+ 
+    void func_standard(CDialogState* state);        //Standard function
 };
 
     

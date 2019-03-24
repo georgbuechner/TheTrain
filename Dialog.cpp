@@ -17,7 +17,6 @@ CDialog::CDialog(std::map<std::string, CDialogState*> mapStates, std::string sEv
         m_EM = m_EM->getManagers().at("standard");
 }
 
-
 //startDialog
 void CDialog::startDialog()
 {
@@ -28,12 +27,12 @@ void CDialog::startDialog()
     //Loop running till end of dialog is reached
     for(;;)
     {
-        //Create current state
+        //Get current state
         CDialogState* curState = m_mapStates.at(sIndex);
 
-        //Print text
-        std::cout << curState->getSpeaker() << "  " << curState->getText() << "\n";
-
+        //Call state function
+        callStateFunction(curState);
+        
         //Throw event "dialogstate [index] started"
         CEvent* event = new CEvent(sIndex, "");
         m_EM->throw_event(event);
@@ -95,4 +94,31 @@ bool CDialog::is_number(const std::string& s)
     return !s.empty() && std::find_if(s.begin(),
         s.end(), [](char c) { return !std::isdigit(c); }) == s.end();
 }
+
+
+// *** Functions *** //
+
+
+//Initialize map of all dialog-state-functions
+std::map<std::string, void(CDialog::*)(CDialogState*)>CDialog::mapDialogFuncs = {};
+/**
+* initializeFunctions: adds all functions to map of dialog-state-functions.
+*/
+void CDialog::initializeFunctions()
+{
+    // *** Add dialog-state-function to map *** // 
+    mapDialogFuncs["standard"] = &CDialog::func_standard;
+}
+
+
+/**
+* func_standard: standard function for calling dialog state
+* @parameter CDialogState* (Dialog state which was called.
+*/
+void CDialog::func_standard(CDialogState* state)
+{
+    //Print text
+    std::cout << state->getSpeaker() << "  " << state->getText() << "\n";
+}
+
  

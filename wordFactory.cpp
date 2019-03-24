@@ -19,6 +19,7 @@ void CGame::worldFactory()
     CEventmanager::initializeManagers(this);
 
     //***** Create quests *****//
+    CDialog::initializeFunctions();
     m_mapQuests = questFactory("factory/quests.json");
 
     //***** Create Rooms *****//
@@ -202,7 +203,7 @@ CDialog* CGame::dialogFactory(std::string sPath)
         std::list<CDialogOptionState*> listOptStates = dialogOptStateFactory(j_state["playerOptions"]);     
         //Create state
         CDialogState* state = new CDialogState(j_state["id"], j_state["text"], j_state["speaker"], 
-                            j_state.value("dialogEnd", ""), listOptStates, j_state["end"]);
+       j_state.value("dialogEnd", ""), j_state.value("func", "standard"), listOptStates, j_state["end"]);
 
         //Add state to list of states
         mapStates[j_state["id"]] = state;

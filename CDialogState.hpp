@@ -24,10 +24,11 @@ private:
     std::string m_sText;        //Text
     std::string m_sSpeaker;     //String of person who is speaking
     std::string m_sDialogEnd;   //Text to print in case this is last state
-   
+    std::string m_sFunction;    //String identifier for functionpointer used when called 
+
     std::list<CDialogOptionState*> m_playerOptions;   //Player options
 
-    bool m_end;             //Dialog ended?
+    bool m_end;                 //Dialog ended?
 
 public:
     /**
@@ -40,13 +41,14 @@ public:
     * @parameter bool (boolean indicating whether dialog hast enden)
     */
     CDialogState(std::string sID, std::string sText, std::string sSpeaker, std::string sDialogEnd, 
-            std::list<CDialogOptionState*> playerOptions, bool end) {
+            std::string sFunction, std::list<CDialogOptionState*> playerOptions, bool end) {
 
         //Assign attributes
         m_sID = sID;
         m_sText = sText;
         m_sSpeaker = sSpeaker;
         m_sDialogEnd = sDialogEnd;
+        m_sFunction = sFunction;
         m_playerOptions = playerOptions;
         m_end = end;
     }
@@ -85,6 +87,13 @@ public:
         return m_sDialogEnd;
     }
 
+    /**
+    * getFunction: get string identifying function
+    * @return string (string identifying function)
+    */
+    std::string getFunction() {
+        return m_sFunction;
+    }
     /**
     * getPlayerOptions: get map of option-states (options the player has)
     * @return map<size_t, CDialogOptionState*> (map of option-states)
