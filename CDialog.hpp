@@ -19,6 +19,7 @@
 class CDialogState;
 class CDialogOptionState;
 class CEventmanager;
+class CPlayer;
 
 
 class CDialog
@@ -52,7 +53,7 @@ public:
     /**
     * startDialog: function starting and running dialog
     */
-    void startDialog();
+    void startDialog(CPlayer& player);
 
     bool is_number(const std::string& s);
 

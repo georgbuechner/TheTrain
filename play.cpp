@@ -38,6 +38,8 @@ void CGame::play()
     m_EM->add_listener("endGameDirectly", h_endGameDirectly);
     m_EM->add_listener("falseInput", h_falseInput);
 
+    m_Player.getEventmanagers()["functions"] = m_EM;
+
 
     //Print player name and current room of player
     std::cout << m_Player.getName() << " befindet sich in " << m_Player.getCurRoom()->getName() << ".\n";
@@ -55,10 +57,8 @@ void CGame::play()
         CEvent* event = parser.parseCommand(sInput); 
         
         //Throw event
-        m_EM->throw_event(event);
-
-        for(auto it=m_eventmanagers.begin(); it!=m_eventmanagers.end(); it++)
-            (*it)->throw_event(event);
+        for(auto it=m_Player.getEventmanagers().begin(); it!=m_Player.getEventmanagers().end(); it++)
+            it->second->throw_event(event);
 
         //Delete event
         delete event;

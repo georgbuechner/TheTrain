@@ -111,7 +111,7 @@ void CEventmanager::initializeManagers(CGame* game)
 
     //Handler: "talkToJay"
     CQuesthandler* h_talkToJay = new CQuesthandler("talkToJay", "talk_to_jay", "talk_to_jay");
-    em2->add_listener("talkTo", h_talkToJay);
+    em2->add_listener("geschenk-geben", h_talkToJay);
 
     //Handler: talkToParsen
     CQuesthandler* h_talkToParsen = new CQuesthandler("talkToParsen", "talk_to_jay", "talk_to_parsen");

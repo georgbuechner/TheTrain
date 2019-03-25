@@ -10,7 +10,7 @@
 
     {
         "id":"geschenk-geben",
-        "text":"Aha! Der Parsen rennt mir schon die ganze Ziet hinterher. Ich kann seine Geschenke nicht gebrauchen. Das kannst du ihm ruhig mal sagen!",
+        "text":"Aha! Der Parsen rennt mir schon die ganze Zeit hinterher. Ich kann seine Geschenke nicht gebrauchen. Das kannst du ihm ruhig mal sagen!",
         "speaker":"JAY",
         "playerOptions":[],
         "end":true,

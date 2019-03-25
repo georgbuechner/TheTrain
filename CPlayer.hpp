@@ -22,6 +22,8 @@ private:
     CRoom* m_curRoom;       //The room the player is currently in
     std::list<CQuest*> m_listQuests;    //List of all the players quests
 
+    std::map<std::string, CEventmanager*> m_mapEventmanagers;      //List of all eventmanagers
+
 public:
 
     /** 
@@ -36,7 +38,7 @@ public:
 
     /**
     * getName: return player's name
-    * @return string (player#s name)
+    * @return string (player's name)
     */
     std::string  getName() {
         return m_sName;
@@ -58,7 +60,13 @@ public:
         return m_listQuests;
     }
 
-
+    /**
+    * getEventmanagers: return player's eventmanagers 
+    * @return map<CEventmanager*> (List of player's eventmanagers)
+    */
+    std::map<std::string, CEventmanager*>& getEventmanagers() {
+        return m_mapEventmanagers;
+    }
 
     //Setter
 

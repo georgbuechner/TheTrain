@@ -296,9 +296,8 @@ std::map<std::string, CQuest*> CGame::questFactory(std::string sPath)
         mapQuests[sID] = quest;
 
         //Add eventmanager to list of eventmanagers
-        if(m_EM->getManagers().count(sID) != 0)
-            m_eventmanagers.push_back(m_EM->getManagers().at(sID));
-
+        if(m_EM->getStaticManagers().count(sID) != 0)
+            m_Player.getEventmanagers()[sID] = m_EM->getStaticManagers().at(sID); 
     }
 
     return mapQuests;

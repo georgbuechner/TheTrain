@@ -41,7 +41,7 @@ public:
 
     static void initializeManagers(CGame* game);
 
-    std::map<std::string, CEventmanager*>& getManagers() {
+    std::map<std::string, CEventmanager*>& getStaticManagers() {
         return m_mapEMs;
     }
 
