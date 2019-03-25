@@ -19,10 +19,11 @@ void CGame::worldFactory()
     CEventmanager::initializeManagers(this);
 
     //***** Create quests *****//
-    CDialog::initializeFunctions();
     m_mapQuests = questFactory("factory/quests.json");
 
     //***** Create Rooms *****//
+    CExit::initializeFunctions();
+    CDialog::initializeFunctions();
     m_mapAllRooms = roomFactory("factory/rooms.json");
 
     std::cout << "Parsing complete! \n\n";
@@ -118,9 +119,10 @@ std::map<size_t, CExit*> CGame::exitFactory(nlohmann::json j_listExits)
         std::string sHeadDesc = j_exit.value("headDescription", "");
         std::string sFootDesc = j_exit.value("footDescription", "");
         std::string sAltDesc  = j_exit.value("altDescription", "");
+        std::string sFunc = j_exit.value("func", "standard");
         
         //Create exit
-        CExit* exit = new CExit(sName, sID, sToRoom, vTake, sHeadDesc, sFootDesc, sAltDesc);
+        CExit* exit = new CExit(sName, sID, sToRoom, vTake, sHeadDesc, sFootDesc, sAltDesc, sFunc);
 
         //Insert exit into dictionary of exits in a room
         mapExits[it] = exit;

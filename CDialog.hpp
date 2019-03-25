@@ -29,7 +29,7 @@ private:
     std::map<std::string, CDialogState*> m_mapStates;   //Map containing all states of dialog
     CEventmanager* m_EM;
 
-    static std::map<std::string, void(CDialog::*)(CDialogState*)> mapDialogFuncs;
+    static std::map<std::string, void(CDialog::*)(CDialogState*)> m_mapDialogFuncs;
 
 public:
     /**
@@ -68,11 +68,10 @@ public:
     * callStateFunction: call function of given state
     * parameter CDialogState* (dialog state)
     */
-    void callStateFunction(CDialogState* state) {
-        (this->*mapDialogFuncs.at(state->getFunction()))(state);
-    }
+    void callStateFunction(CDialogState* state);
  
     void func_standard(CDialogState* state);        //Standard function
+    void func_parsen_anna(CDialogState* state);          //parsen_anna
 };
 
     

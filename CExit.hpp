@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 
 class CExit
 {
@@ -26,6 +27,10 @@ private:
     std::string m_headDescription;  //Description placed before the room-description.
     std::string m_foorDescription;  //Description placed after the room-description.
     std::string m_altDescription;   //Alternative description. (No room-description is printed)
+    
+    std::string m_sFunction;        //Function indicating functionpointer
+
+    static std::map<std::string, void(CExit::*)()> m_mapExitFuncs;
 
 public:
     /**
@@ -37,19 +42,11 @@ public:
     * @parameter string (head-description)
     * @parameter string (foot-description)
     * @parameter string (alternative-description)
+    * @parameter string (function)
     */
     CExit(std::string sName, std::string sID,  std::string sLinkedRoom, std::vector<std::string> vTake, 
-                std::string headDescription, std::string footDescription, std::string altDescription)
-    {
-        //Assign attributes
-        m_sName = sName;
-        m_sID = sID;
-        m_sLinkedRoom = sLinkedRoom;
-        m_vTake = vTake;
-        m_headDescription = headDescription;
-        m_foorDescription = footDescription;
-        m_altDescription = altDescription; 
-    }
+                                    std::string headDescription, std::string footDescription, 
+                                    std::string altDescription, std::string sFunction);
 
     // ** Getter ** //
     
@@ -119,6 +116,20 @@ public:
         m_sName = sName;
     }
 
+
+    // *** Functions *** //
+     
+    /**
+    * initializeFunctions: adds all functions to map of exit-functions.
+    */
+    static void initializeFunctions();
+
+    /**
+    * callExiteFunction: call function of given exit 
+    */
+    void callExitFunction();
+ 
+    void func_standard();        //Standard function
 };
 
 #endif   

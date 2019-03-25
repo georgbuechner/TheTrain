@@ -135,13 +135,13 @@ void CQuestStep::talk_to_jay_Talk(CEvent* event)
     }
 }
 
-void CQuestStep::talk_to_jay_Parsen(CEvent* event) {
+void CQuestStep::talk_to_jay_Parsen(CEvent* ) {
 
     m_achieved = true;
     std::cout << "Quest step: \"" << m_sName << "\" succsessfull.\n"; 
 }
 
-void CQuestStep::talk_to_jay_givePresent(CEvent* event) {}
-void CQuestStep::talk_to_jay_dontPresent(CEvent* event) {}
+void CQuestStep::talk_to_jay_givePresent(CEvent* ) {}
+void CQuestStep::talk_to_jay_dontPresent(CEvent* ) {}
 
 

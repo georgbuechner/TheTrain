@@ -53,7 +53,8 @@
         "speaker":"PARSEN",
         "playerOptions": [],
         "end":true,
-        "dialogEnd":"Dialog endend."
+        "dialogEnd":"Dialog endend.",
+        "func":"parsen_anna"
     },
 
 

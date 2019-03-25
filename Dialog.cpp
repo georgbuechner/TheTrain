@@ -42,7 +42,7 @@ void CDialog::startDialog()
         if(curState->getEnd() == true)
         {
             std::cout << curState->getDialogEnd() << "\n";
-            return;
+            break;
         }
 
         //Print options
@@ -77,16 +77,18 @@ void CDialog::startDialog()
             //Check whether state exists
             if(!optState)
             {
-                std::cout << "Wrong input! Enter a number.\n";
+                std::cout << "Wrong input! Select one of the options.\n";
                 continue;
             }
 
             //Print players text and change index to target state
-            std::cout << "PLAYER  " << curState->getOptState(choice, true)->getText() << "\n";
+            std::cout << "\nPLAYER  " << curState->getOptState(choice, true)->getText() << "\n";
             sIndex.assign(curState->getOptState(choice, true)->getTargetState());
             input = true;
         }
      }
+
+    std::cout << "\n";
 }
  
 bool CDialog::is_number(const std::string& s)
@@ -100,25 +102,50 @@ bool CDialog::is_number(const std::string& s)
 
 
 //Initialize map of all dialog-state-functions
-std::map<std::string, void(CDialog::*)(CDialogState*)>CDialog::mapDialogFuncs = {};
+std::map<std::string, void(CDialog::*)(CDialogState*)>CDialog::m_mapDialogFuncs = {};
+
 /**
 * initializeFunctions: adds all functions to map of dialog-state-functions.
 */
 void CDialog::initializeFunctions()
 {
     // *** Add dialog-state-function to map *** // 
-    mapDialogFuncs["standard"] = &CDialog::func_standard;
+    m_mapDialogFuncs["standard"] = &CDialog::func_standard;
+    m_mapDialogFuncs["parsen_anna"] = &CDialog::func_parsen_anna;
 }
 
+/**
+* callStateFunction: call function of given state
+* parameter CDialogState* (dialog state)
+*/
+void CDialog::callStateFunction(CDialogState* state) {
+    (this->*m_mapDialogFuncs.at(state->getFunction()))(state);
+}
 
 /**
 * func_standard: standard function for calling dialog state
-* @parameter CDialogState* (Dialog state which was called.
+* @parameter CDialogState* (Dialog state which was called.)
 */
 void CDialog::func_standard(CDialogState* state)
 {
     //Print text
     std::cout << state->getSpeaker() << "  " << state->getText() << "\n";
 }
+
+/**
+* func_parsen_anna: change dialog of parsen
+* @parameter CDialogState* (Dialog state which was called)
+*/
+void CDialog::func_parsen_anna(CDialogState* state)
+{
+    //Print text
+    std::cout << state->getSpeaker() << "  " << state->getText() << "\n";
+
+    //Change dialog of parsen
+    CDialogOptionState* optState = m_mapStates.at("START")->getOptState(3, false);
+    m_mapStates.at("START")->getOptState(3, true)->setActive(false);
+    optState->setActive(true);
+}
+
 
  

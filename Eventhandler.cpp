@@ -47,6 +47,9 @@ void CEventhandler::echo_changeRoom(CEvent* event)
             //Check whether exit is selected exit (use strcmp and const char*)
             if(strcmp(event->getIdentifier().c_str(), vTakes[yt].c_str()) == 0)
             {
+                //Call exits custim function
+                it->second->callExitFunction();
+
                 //get linked room and change players room
                 CRoom* room = event->getGame()->getMapRooms().at(it->second->getLinkedRoom());
                 event->getGame()->getPlayer().setCurRoom(room);
@@ -65,6 +68,8 @@ void CEventhandler::echo_changeRoom(CEvent* event)
                     std::cout << it->second->getFootDesc(); //Footer description
                     std::cout << "\n";
                 }
+
+                std::cout << "\n";
 
                 return;
             }
@@ -146,7 +151,7 @@ void CEventhandler::echo_showActiveQuests(CEvent* event)
     std::list<CQuest*> listQuests = event->getGame()->getPlayer().getQuests();
 
     //Print all active quests
-    std::cout << "Aktive Quests: (Anzahl Quests: " << listQuests.size() << ") \n";
+    std::cout << "\nAktive Quests: (Anzahl Quests: " << listQuests.size() << ") \n";
     for(auto it=listQuests.begin(); it!=listQuests.end(); it++)
     {
         if((*it)->getAchieved() == false)
@@ -287,35 +292,14 @@ void CEventhandler::echo_falseInput(CEvent* event)
 // **** factory/parsenDialog.json **** //
 void CEventhandler::echo_parsenDialogAnna(CEvent* event)
 {
-    if(event->getGame()->getQuests().count("talk_to_jay") == 0)
-    {
-        std::cout << "Quest not found.\n";
-        return;
-    }
+    CGame* game = event->getGame();
 
-    CQuest* quest = event->getGame()->getQuests().at("talk_to_jay");
-
-    std::cout << "Quest \"" << quest->getName() << "\" angenommen.\n";
-
+    //Add quests to players list of quests
+    std::cout << "Quest \"" << game->getQuests().at("talk_to_jay")->getName() << "\" angenommen.\n";
+    game->getPlayer().getQuests().push_back(game->getQuests().at("talk_to_jay"));
 
     //Change dialog of Jay.
-    event->getGame()->getMapChars().at("jay")->setDialog(event->getGame()->dialogFactory("factory/Dialogs/jayDialog.json"));
-
-
-    //Change dialog of parsen
-    CDialog* dialog = event->getGame()->getMapChars().at("parsen_rogochin")->getDialog();
-
-    //Add new option state 3
-    CDialogOptionState* optState = dialog->getStates().at("START")->getOptState(3, false);
-
-    //Delete old state 3
-    dialog->getStates().at("START")->getOptState(3, true)->setActive(false);
-
-    //Change new optionstate to true
-    optState->setActive(true);
-
-    //Add quests tp players list of quests
-    event->getGame()->getPlayer().getQuests().push_back(quest);
+    game->getMapChars().at("jay")->setDialog(game->dialogFactory("factory/Dialogs/jayDialog.json"));
 }
 
     

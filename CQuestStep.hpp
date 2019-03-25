@@ -40,7 +40,6 @@ public:
     CQuestStep(std::string id, std::string sName, std::string sDescription, bool achieved, 
                                                   bool active, std::string sFuncID);
 
-    static void initializeFunctions();
 
     // ** getter ** //
 
@@ -102,6 +101,8 @@ public:
         m_active= active;
     }
 
+
+    static void initializeFunctions();
 
     /** 
     * callQuestFunction: call function of this quest step 

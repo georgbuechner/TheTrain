@@ -6,7 +6,7 @@
     "description": "Du betrittst Abteil A. Ein alter Mann sitzt am Fenster, schaut auf die Landschaft und raucht.",
 
     "exits":  [ {"name":"Flur", "id":"abteil_a-flur", "to":"flur", "take":["in den Flur", "in den flur", "raus"]} ],
-    "characters": [ {"name":"Alter Mann", "id":"alter_mann", "take":["Alter Mann", "alter mann"]} ]
+    "characters": [ {"name":"Alter Mann", "id":"alter_mann", "take":["Alter Mann", "alter mann", "Alter", "Mann"]} ]
 },
 
 {

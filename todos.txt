@@ -1,5 +1,5 @@
-CExit.h
--- add functionpointers for events
+General
+-- write skript for search and replace in all files
 Contexts
 1. Move map of eventmanagers to player.
 2. Change game to "world"
