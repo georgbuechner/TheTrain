@@ -112,15 +112,17 @@ void CEventhandler::echo_showChars(CEvent* event)
 */
 void CEventhandler::echo_talkTo(CEvent* event)
 {
+    //Get Game
+    CGame* game = event->getGame();
+
     //Get map of characters in room
-    std::map<std::string, std::string> mapChars = event->getGame()->getPlayer().getCurRoom()
-                                                                                    ->getMapChars();
+    std::map<std::string, std::string> mapChars = game->getPlayer().getCurRoom()->getMapChars();
 
     //Iterate over map of characters and call dialog
     for(auto it=mapChars.begin(); it!=mapChars.end(); it++)
     {
         //Get array of all accepted words.
-        std::vector<std::string> vTake = event->getGame()->getMapChars().at(it->first)->getTake();
+        std::vector<std::string> vTake = game->getMapChars().at(it->first)->getTake();
 
         //Iterate over accepted words and check whether they match with identifier.
         for(size_t yt = 0; yt < vTake.size(); yt++)
@@ -129,7 +131,7 @@ void CEventhandler::echo_talkTo(CEvent* event)
             if(strcmp(event->getIdentifier().c_str(), vTake[yt].c_str()) == 0) 
             {
                 //Call dialog of selected character
-                event->getGame()->getMapChars().at(it->first)->getDialog()->startDialog();
+                game->getMapChars().at(it->first)->getDialog()->startDialog(game->getPlayer());
                 return;
             }
         }

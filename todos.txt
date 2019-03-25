@@ -1,7 +1,13 @@
+CDialog
+-- change eventType from "index" to "[dialog_name]_index"
+CItem
+-- Add items
+-- Add inventorys
+-- Add items in rooms
 General
+-- finish quest "talkt_to_jay"
 -- write skript for search and replace in all files
 Contexts
-1. Move map of eventmanagers to player.
 2. Change game to "world"
 3. Add contexts 
 
