@@ -32,48 +32,28 @@ void CEventhandler::echo_showExits(CEvent* event)
 */
 void CEventhandler::echo_changeRoom(CEvent* event)
 {
+    CFunctions function;
+
     //Get map of exits in current room
     std::map<size_t, CExit*> mapExits= event->getGame()->getPlayer().getCurRoom()->getMapExits();
 
     //Iterate over exits and find selected exit, print descriptions and change players room
     for(auto it=mapExits.begin(); it!=mapExits.end(); it++)
     {
-        //Get vector with all accepted words
-        std::vector<std::string> vTakes = it->second->getTake();
-
-        //Iterate over all accepted words and check if they match with identifier.
-        for(size_t yt = 0; yt < vTakes.size(); yt++)
+        if(function.in(event->getIdentifier(), it->second->getTake()) == true)
         {
-            //Check whether exit is selected exit (use strcmp and const char*)
-            if(strcmp(event->getIdentifier().c_str(), vTakes[yt].c_str()) == 0)
-            {
-                //Call exits custim function
-                it->second->callExitFunction();
+            //Call exits custim function
+            it->second->callExitFunction();
 
-                //get linked room and change players room
-                CRoom* room = event->getGame()->getMapRooms().at(it->second->getLinkedRoom());
-                event->getGame()->getPlayer().setCurRoom(room);
-            
-                // ** Print descriptions ** //
+            //get linked room and change players room
+            CRoom* room = event->getGame()->getMapRooms().at(it->second->getLinkedRoom());
+            event->getGame()->getPlayer().setCurRoom(room);
+        
+            // ** Print descriptions ** //
+            room->printDescription(it->second);
 
-                //Check whether exit has an alternative description
-                if(it->second->getAltDesc().length() > 0)
-                    std::cout << it->second->getAltDesc() << "\n";
-
-                //Print secriptions in normal order
-                else 
-                {
-                    std::cout << it->second->getHeadDesc(); //Header description
-                    std::cout << room->getDescription();    //Room description
-                    std::cout << it->second->getFootDesc(); //Footer description
-                    std::cout << "\n";
-                }
-
-                std::cout << "\n";
-
-                return;
-            }
-        } 
+            return;
+        }
     }
 
     //Error message in case exit could not be found

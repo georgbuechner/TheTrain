@@ -20,6 +20,7 @@
 #include <string>
 #include <string.h>
 #include "CGame.hpp"
+#include "CFunctions.h"
 
 //Forward declarations
 class CEvent;
@@ -112,3 +113,5 @@ public:
 
 
 #endif
+
+

@@ -29,7 +29,7 @@ void CGame::play()
 
     //Add listeners to eventmanager
     m_EM->add_listener("showExits", h_exits);
-    m_EM->add_listener("changeRoom", h_change);
+    //m_EM->add_listener("changeRoom", h_change);
     m_EM->add_listener("showChars", h_chars);
     m_EM->add_listener("talkTo", h_talk);
     m_EM->add_listener("showActiveQuests", h_showActive);
@@ -44,6 +44,11 @@ void CGame::play()
     //Print player name and current room of player
     std::cout << m_Player.getName() << " befindet sich in " << m_Player.getCurRoom()->getName() << ".\n";
 
+    CEventManager eventmanager;
+    using namespace std::placeholders; 
+    eventmanager.add_listener("showExits", bind(&CPlayer::showExits, &m_Player, _1));
+    eventmanager.add_listener("changeRoom", bind(&CPlayer::changeRoom, &m_Player, m_mapAllRooms, _1));
+
     //Main loop: here player can talk to characters, change room and so on
     std::string sInput;
     do
@@ -55,6 +60,8 @@ void CGame::play()
 
         //Parse command into event
         CEvent* event = parser.parseCommand(sInput); 
+
+        eventmanager.throw_event(event);
         
         //Throw event
         for(auto it=m_Player.getEventmanagers().begin(); it!=m_Player.getEventmanagers().end(); it++)

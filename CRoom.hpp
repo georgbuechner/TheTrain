@@ -13,6 +13,7 @@
 #include <map>
 #include "CExit.hpp"
 #include "CCharacter.hpp"
+#include "CFunctions.h"
 
 //Forward declarations:
 class CCharacter;
@@ -35,13 +36,7 @@ public:
     * @parameter map<string, CCharacter*>   (map with all characters)
     */
     CRoom(std::string sName, std::string sDescription,  std::map<size_t, CExit*> mapExits, 
-          std::map<std::string, std::string> mapCharacters) {
-
-        m_sName         = sName;
-        m_sDescription  = sDescription;
-        m_mapOfExits    = mapExits;
-        m_mapOfCharacters = mapCharacters;
-    }
+          std::map<std::string, std::string> mapCharacters);
 
     // ** Getter ** //
     
@@ -49,33 +44,31 @@ public:
     * getName: get the room's name.
     * @return string (room's name)
     */
-    std::string getName() {
-        return m_sName;
-    }
+    std::string getName();
 
     /**
     * getDescription: get room's custom description
     * @return string (room's custim description)
     */
-    std::string getDescription() {
-        return m_sDescription;
-    }
+    std::string getDescription();
 
     /**
     * getMapExits: get map of all exits leading out off this room
     * @return map<size_t, CExit*> (map of all the room's exits)
     */
-    std::map<size_t, CExit*>& getMapExits() {
-        return m_mapOfExits;
-    }
+    std::map<size_t, CExit*>& getMapExits();
 
     /**
     * getMapChars: get map of all people in the room.
     * @return map<string, CCharacter*> (map of all the room's characters)
     */
-    std::map<std::string, std::string>& getMapChars() {
-        return m_mapOfCharacters;
-    }
+    std::map<std::string, std::string>& getMapChars();
+
+    void printDescription(CExit* exit);
+
+    void showExits();
+
+    CRoom* changeRoom(std::string sRoom, std::map<std::string, CRoom*> mapRooms);
 };
 
 #endif

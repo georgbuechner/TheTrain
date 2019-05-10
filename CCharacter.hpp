@@ -31,15 +31,7 @@ public:
     * @parameter vector <string> (words accepted)
     * @parameter CDialog* (pointer to character's dialog)
     */
-    CCharacter(std::string sName, std::string sID, std::vector<std::string> vTake, CDialog* dialog) {
-
-        //Assign attriubutes
-        m_sName = sName;
-        m_sID = sID;
-        m_vTake = vTake;
-        m_dialog = dialog;
-    }
-
+    CCharacter(std::string sName, std::string sID, std::vector<std::string> vTake, CDialog* dialog);
     
     // ** Getter ** //
     
@@ -47,33 +39,25 @@ public:
     * getName: get character's name.
     * @return string (character's name)
     */
-    std::string getName() {
-        return m_sName;
-    }
+    std::string getName();
 
     /**
     * getID: get character's id.
     * @return string (character's custom id)
     */
-    std::string getID() {
-        return m_sID;
-    }
+    std::string getID();
 
     /**
     * getTake: get vector with all accepted words.
     * @return vector<string> (array with all accepted words)
     */
-    std::vector<std::string> getTake() {
-        return m_vTake;
-    }
+    std::vector<std::string> getTake();
 
     /**
     * getDialog: get pointer to dialog.
     * @return CDialog* (pointer to dialog)
     */ 
-    CDialog* getDialog() {
-        return m_dialog;
-    }
+    CDialog* getDialog();
 
     
     // ** setter ** //
@@ -82,10 +66,7 @@ public:
     * setDialog: setaracter's dialog.
     * @parameter CDialog* (pointer to dialog)
     */
-    void setDialog(CDialog* dialog) {
-        m_dialog = dialog;
-    }
-    
+    void setDialog(CDialog* dialog);
 
 };
 

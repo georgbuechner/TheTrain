@@ -4,14 +4,16 @@
 #ifndef CPLAYER_H
 #define CPLAYER_H
 
+class CEvent;
+
 #include <iostream>
 #include <string>
 #include <list>
 #include "CRoom.hpp"
 #include "CQuest.hpp"
+#include "CEvent.hpp"
 
 using namespace std;
-
 
 class CPlayer
 {
@@ -29,10 +31,7 @@ public:
     /** 
     * Constructor: initialising player with name and current room
     */
-    CPlayer(std::string sName, CRoom* curRoom) {
-        m_sName.assign(sName);
-        m_curRoom = curRoom;
-    }
+    CPlayer(std::string sName, CRoom* curRoom);
 
     // ** Getter ** //
 
@@ -40,33 +39,25 @@ public:
     * getName: return player's name
     * @return string (player's name)
     */
-    std::string  getName() {
-        return m_sName;
-    }
+    std::string  getName(); 
 
     /**
     * getCurRoom: return player's current room
     * @return CRoom* (player's current room)
     */
-    CRoom* getCurRoom() {
-        return m_curRoom;
-    }
+    CRoom* getCurRoom();
 
     /**
     * getQuests: return player's quests 
     * @return list<Quests*> (List of player's quests)
     */
-    std::list<CQuest*>& getQuests() {
-        return m_listQuests;
-    }
+    std::list<CQuest*>& getQuests();
 
     /**
     * getEventmanagers: return player's eventmanagers 
     * @return map<CEventmanager*> (List of player's eventmanagers)
     */
-    std::map<std::string, CEventmanager*>& getEventmanagers() {
-        return m_mapEventmanagers;
-    }
+    std::map<std::string, CEventmanager*>& getEventmanagers();
 
     //Setter
 
@@ -74,16 +65,17 @@ public:
     * setName: set name of player
     * @parameter string (name of player)
     */
-    void setName(std::string sName) {
-        m_sName = sName;
-    }
+    void setName(std::string sName);
 
     /**
     * setCurRoom: set player's current room
     */ 
-    void setCurRoom(CRoom* newRoom) {
-        m_curRoom = newRoom;
-    }
+    void setCurRoom(CRoom* newRoom);
+
+    void showExits(CEvent* event);
+
+    void changeRoom(std::map<std::string, CRoom*> mapRooms, CEvent* event);
+    
 };
 
 #endif

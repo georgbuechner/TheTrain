@@ -3,9 +3,16 @@
 * Class containing various functions that might come in handy.
 */
 
+#ifndef CFUNCTIONS_H
+#define CFUNCTIONS_H
+
 #include <iostream>
 #include <string>
+#include <vector>
 #include <algorithm>
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
 
 class CFunctions
 {
@@ -17,24 +24,20 @@ public:
     * @parameter string (string b)
     * @return bool (true if strings are equal, false if not)
     */
-    bool iequals(std::string a, std::string b);
+    bool iequals(const char* a, const char* b);
+
+    /*
+    * in: checks whether a string is in a vector of strings
+    * @parameter string
+    * @parameter vector<string> 
+    * @return bool
+    */
+    bool in(std::string str, std::vector<std::string>);
 
 };
 
 
-/**
-* iequals: compare two string and ignore case.
-* @parameter string (string a)
-* @parameter string (string b)
-* @return bool (true if strings are equal, false if not)
-*/
-bool iequals(const string& a, const string& b)
-{
-    unsigned int sz = a.size();
-    if (b.size() != sz)
-        return false;
-    for (unsigned int i = 0; i < sz; ++i)
-        if (tolower(a[i]) != tolower(b[i]))
-            return false;
-    return true;
-}
+
+
+
+#endif

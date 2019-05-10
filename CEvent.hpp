@@ -39,12 +39,7 @@ public:
     * @parameter string (Event type)
     * @parameter string (identifier)
     */
-    CEvent(std::string sEventType, std::string sIdentifier) {
-
-        //Assign attributes
-        m_sEventType = sEventType;
-        m_sIdentifier = sIdentifier;
-    }
+    CEvent(std::string sEventType, std::string sIdentifier);
 
     
     // ** getter ** //
@@ -53,25 +48,19 @@ public:
     * getEventType: get event type.
     * @return string (event type)
     */
-    std::string getEventType() {
-        return m_sEventType;
-    }
+    std::string getEventType();
 
     /**
     * getIdentifier: get identifier with extra information about what happend.
     * @return string (identifier)
     */
-    std::string getIdentifier() {
-        return m_sIdentifier;
-    }
+    std::string getIdentifier();
 
     /**
     * getGame: get pointer to the game/ context.
     * @return CGame* (Pointer to the game/ context)
     */
-    CGame* getGame() {
-        return m_game;
-    }
+    CGame* getGame();
 
     
     // ** setter ** //
@@ -80,11 +69,7 @@ public:
     * setGame: set game/ current context.
     * @parameter Cgame* (pointer to game/ context) 
     */
-    void setGame(CGame* game) {
-        m_game = game;
-    }
-
-
+    void setGame(CGame* game);
 };
 
 #endif

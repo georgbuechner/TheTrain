@@ -16,6 +16,7 @@ class CEventmanager;
 class CDialog;
 class CQuest;
 class CQuestStep;
+class CPlayer;
 
 #include <iostream>
 #include <list>
@@ -26,6 +27,7 @@ class CQuestStep;
 #include "CPlayer.hpp"
 #include "CDialog.hpp"
 #include "CEventmanager.hpp"
+#include "CEventManager.hpp"
 #include "CEventhandler.hpp"
 #include "CQuesthandler.hpp"
 #include "CCommandParser.hpp"
@@ -42,8 +44,6 @@ private:
     CPlayer m_Player;                               //Player 
     CEventmanager* m_EM;                            //Eventmanager of the game
     bool m_gameEnd;                                 //Game ended? 
-
-    std::list<CEventmanager*> m_eventmanagers;              //List of eventmanagers
 
     std::map<std::string, CRoom*> m_mapAllRooms;            //Map of all exits in the game.
     std::map<std::string, CCharacter*> m_mapAllChars;       //Map of all chars in the game.
@@ -150,16 +150,6 @@ public:
     * @return map<string, CCharacter*> (map of all characters created)
     */
     std::map<std::string, std::string> characterFactory(nlohmann::json j_listCharacters);   
-
-    /** 
-    * emDialogsFactory: create all dialog eventmanagers.
-    */
-    std::map<std::string, CEventmanager*> emDialogsFactory();
-
-    /**
-    * emQuestFactory: create all quest eventmanagers.
-    */
-    void emQuestFactory();
 
     /**
     * dialogFactory: gets called by characterFactory. Parses a given dialog (.json-file) into 
