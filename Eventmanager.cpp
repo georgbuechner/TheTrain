@@ -64,9 +64,6 @@ void CEventmanager::throw_event(CEvent* event)
 
     std::list<CEventhandler*>* listEventhandlers = m_mapHandlers.at(event->getEventType());
     
-    //Add pointer of game to event
-    event->setGame(m_game);
-
     //Iterate over list of handlers and delete handler when found
     for(auto it=listEventhandlers->begin(); it!=listEventhandlers->end(); it++)
         (*it)->callHandlerFunction(event);
@@ -80,16 +77,16 @@ std::map<std::string, CEventmanager*>CEventmanager::m_mapEMs = {};
 * initializeFunctions
 * initialize all eventmanagers
 */
-void CEventmanager::initializeManagers(CGame* game)
+void CEventmanager::initializeManagers()
 {
     // ***** Standard ***** //
-    CEventmanager* em = new CEventmanager(game);
+    CEventmanager* em = new CEventmanager;
     m_mapEMs["standard"] = em;
 
     // ***** Dialog ***** //
 
     // --- factory/Dialogs/parsenDialog.json --- //
-    CEventmanager* em1 = new CEventmanager(game);
+    CEventmanager* em1 = new CEventmanager;
     
     //Handlers
     CEventhandler* h_anna = new CEventhandler("quest_jay", &CEventhandler::echo_parsenDialogAnna);
@@ -103,7 +100,7 @@ void CEventmanager::initializeManagers(CGame* game)
 
     
     // --- talk_to_Jay --- //
-    CEventmanager* em2 = new CEventmanager(game); 
+    CEventmanager* em2 = new CEventmanager; 
 
     //Handler: "findJay"
     CQuesthandler* h_findJay = new CQuesthandler("findJay", "talk_to_jay", "find_jay");

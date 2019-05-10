@@ -15,8 +15,8 @@
 void CGame::worldFactory()
 {
     //***** Create Eventmanagers ****** //
-    m_EM = new CEventmanager(this);
-    CEventmanager::initializeManagers(this);
+    m_EM = new CEventmanager();
+    CEventmanager::initializeManagers();
 
     //***** Create quests *****//
     m_mapQuests = questFactory("factory/quests.json");

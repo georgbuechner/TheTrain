@@ -16,7 +16,6 @@ class CEventmanager;
 class CDialog;
 class CQuest;
 class CQuestStep;
-class CPlayer;
 
 #include <iostream>
 #include <list>

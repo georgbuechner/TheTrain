@@ -14,5 +14,7 @@ CQuesthandler::CQuesthandler(std::string sId, std::string sQuest, std::string sQ
     
 void CQuesthandler::echo_callQuest(CEvent* event)
 {
+    /*
     event->getGame()->getQuests().at(m_sQuest)->getSteps().at(m_sQuestStep)->callQuestFunction(event);
+    */
 }

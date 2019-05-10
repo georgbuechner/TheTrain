@@ -7,13 +7,13 @@
 * @parameter string (event type)
 * @parameter CEventhandler* (handler for new listener)
 */
-void CEventManager::add_listener(std::string sEventType, std::function<void(CEvent*)>func) 
+void CEventManager::add_listener(std::string sEventType, std::function<void(std::string)>func) 
 {
     //Add new entry to eventmanager
     if(m_mapHandlers.count(sEventType) == 0)
     {
         //Create empty map of event handelers
-        std::list<std::function<void(CEvent*)>> lHandlers;
+        std::list<std::function<void(std::string)>> lHandlers;
         
         //Add event to map 
         lHandlers.push_back(func);
@@ -31,15 +31,15 @@ void CEventManager::add_listener(std::string sEventType, std::function<void(CEve
 * Throw event: call listeners for event
 * @parameter string (event type)
 */
-void CEventManager::throw_event(CEvent* event)
+void CEventManager::throw_event(std::string sEventType, std::string sEvent)
 {
     //Get list with all handlers of an event type
-    if(m_mapHandlers.count(event->getEventType()) == 0)
+    if(m_mapHandlers.count(sEventType) == 0)
         return;
 
-    std::list<std::function<void(CEvent*)>> listHandlers = m_mapHandlers[event->getEventType()];
+    std::list<std::function<void(std::string)>> listHandlers = m_mapHandlers[sEventType];
     
     //Iterate over list of handlers and delete handler when found
     for(auto it=listHandlers.begin(); it!=listHandlers.end(); it++)
-        (*it)(event);
+        (*it)(sEvent);
 }

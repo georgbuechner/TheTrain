@@ -60,21 +60,17 @@ void CPlayer::setCurRoom(CRoom* newRoom) {
     m_curRoom = newRoom;
 }
 
-void CPlayer::showExits(CEvent* event) {
+void CPlayer::showExits(std::string sEvent) {
     m_curRoom->showExits();
 }
 
-void CPlayer::changeRoom(std::map<std::string, CRoom*> mapRooms, CEvent* event)
+void CPlayer::changeRoom(std::map<std::string, CRoom*> mapRooms, std::string sEvent)
 {
-    CRoom* newRoom = m_curRoom->changeRoom();
+    CRoom* newRoom = m_curRoom->changeRoom(sEvent, mapRooms);
     if(newRoom)
         m_curRoom = newRoom;
 
     else
-    {
-        //Error message in case exit could not be found
-        std::cout << "Wrong Input! Exit " << event->getIdentifier();
-        std::cout << " does not exist. Please try again.\n\n";
-    }
+        std::cout << "Wrong Input! Exit " << sEvent << " does not exist. Please try again.\n\n";
 }
 

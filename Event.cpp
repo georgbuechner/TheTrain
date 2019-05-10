@@ -31,23 +31,5 @@ std::string CEvent::getIdentifier() {
     return m_sIdentifier;
 }
 
-/**
-* getGame: get pointer to the game/ context.
-* @return CGame* (Pointer to the game/ context)
-*/
-CGame* CEvent::getGame() {
-    return m_game;
-}
-
-
-// ** setter ** //
-
-/**
-* setGame: set game/ current context.
-* @parameter Cgame* (pointer to game/ context) 
-*/
-void CEvent::setGame(CGame* game) {
-    m_game = game;
-}
 
 

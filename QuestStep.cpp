@@ -62,6 +62,7 @@ void CQuestStep::standard(CEvent*) {
 */
 void CQuestStep::talk_to_jay_Find(CEvent* event) 
 {
+    /*
     //Get map of all chars in current room
     std::map<std::string, std::string> mapChars = event->getGame()->getPlayer().getCurRoom()->getMapChars();
 
@@ -80,10 +81,12 @@ void CQuestStep::talk_to_jay_Find(CEvent* event)
         //Change "achieved" to true
         m_achieved = true;
     }
+    */
 }
 
 void CQuestStep::talk_to_jay_Talk(CEvent* event) 
 {
+    /*
     std::cout << "step: talk_to_jay called!\n";
     //Get map of queststeps
     std::map<std::string, CQuestStep*> map_steps = event->getGame()
@@ -119,6 +122,7 @@ void CQuestStep::talk_to_jay_Talk(CEvent* event)
 
     //Change "achieved" to true 
     m_achieved = true;
+    */
 }
 
 void CQuestStep::talk_to_jay_Parsen(CEvent* ) {

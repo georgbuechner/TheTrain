@@ -4,14 +4,11 @@
 #ifndef CPLAYER_H
 #define CPLAYER_H
 
-class CEvent;
-
-#include <iostream>
 #include <string>
 #include <list>
 #include "CRoom.hpp"
 #include "CQuest.hpp"
-#include "CEvent.hpp"
+#include "CEventmanager.hpp"
 
 using namespace std;
 
@@ -72,9 +69,9 @@ public:
     */ 
     void setCurRoom(CRoom* newRoom);
 
-    void showExits(CEvent* event);
+    void showExits(std::string sEvent);
 
-    void changeRoom(std::map<std::string, CRoom*> mapRooms, CEvent* event);
+    void changeRoom(std::map<std::string, CRoom*> mapRooms, std::string sEvent);
     
 };
 

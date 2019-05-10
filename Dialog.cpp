@@ -18,7 +18,7 @@ CDialog::CDialog(std::map<std::string, CDialogState*> mapStates, std::string sEv
 }
 
 //startDialog
-void CDialog::startDialog(CPlayer& player)
+void CDialog::startDialog()
 {
     //Attributes:
     std::string sIndex = "START";   //Index points to the next state to be calles. First state
@@ -37,9 +37,11 @@ void CDialog::startDialog(CPlayer& player)
         CEvent* event = new CEvent(sIndex, "");
         m_EM->throw_event(event);
 
+        /*
         //Throw all eventmanagers of player 
         for(auto it=player.getEventmanagers().begin(); it!=player.getEventmanagers().end(); it++)
             it->second->throw_event(event);
+        */
 
         delete event;
 

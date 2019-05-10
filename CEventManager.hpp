@@ -16,14 +16,14 @@
 #include <string>
 #include <string.h>
 #include <map>
-#include "CEvent.hpp"
+#include <list>
 
 class CEventManager
 {
 private:
    
     //Attributes
-    std::map<std::string, std::list< std::function<void(CEvent*)>>> m_mapHandlers;
+    std::map<std::string, std::list< std::function<void(std::string)>>> m_mapHandlers;
 
 public:
 
@@ -32,13 +32,13 @@ public:
     * @parameter string (event type)
     * @parameter CEventhandler* (Pointer to new eventhandler)
     */
-    void add_listener(std::string sEventType, std::function<void(CEvent*)> func);
+    void add_listener(std::string sEventType, std::function<void(std::string)> func);
 
     /**
     * throw_event: call listeners for event.
     * @parameter CEvent* (Pointer to event thrown)
     */
-    void throw_event(CEvent* event);
+    void throw_event(std::string sEventType, std::string sEvent);
 };
 
 #endif

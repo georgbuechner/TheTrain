@@ -9,6 +9,7 @@
 */
 void CEventhandler::echo_showExits(CEvent* event)
 {
+    /*
     //Attributes
     size_t counter = 1;
 
@@ -23,6 +24,7 @@ void CEventhandler::echo_showExits(CEvent* event)
     }
 
     std::cout << "\n";
+    */
 }
 
 /**
@@ -32,6 +34,7 @@ void CEventhandler::echo_showExits(CEvent* event)
 */
 void CEventhandler::echo_changeRoom(CEvent* event)
 {
+    /*
     CFunctions function;
 
     //Get map of exits in current room
@@ -59,6 +62,7 @@ void CEventhandler::echo_changeRoom(CEvent* event)
     //Error message in case exit could not be found
     std::cout << "Wrong Input! Exit " << event->getIdentifier() 
                                                 << " does not exist. Please try again.\n\n";
+    */
 }
 
 /**
@@ -68,6 +72,7 @@ void CEventhandler::echo_changeRoom(CEvent* event)
 */
 void CEventhandler::echo_showChars(CEvent* event)
 {
+    /*
     //Attributes
     size_t counter = 0;
             
@@ -82,6 +87,7 @@ void CEventhandler::echo_showChars(CEvent* event)
     }
 
     std::cout << "\n";
+    */
 }
    
 
@@ -92,6 +98,7 @@ void CEventhandler::echo_showChars(CEvent* event)
 */
 void CEventhandler::echo_talkTo(CEvent* event)
 {
+    /*
     //Get Game
     CGame* game = event->getGame();
 
@@ -118,6 +125,7 @@ void CEventhandler::echo_talkTo(CEvent* event)
     }
     
     std::cout << "Character not found.\n";
+    */
 }
 
 /**
@@ -127,6 +135,7 @@ void CEventhandler::echo_talkTo(CEvent* event)
 */
 void CEventhandler::echo_showActiveQuests(CEvent* event)
 {
+    /*
     size_t counter = 1;
 
     //Get list of players quests
@@ -165,6 +174,7 @@ void CEventhandler::echo_showActiveQuests(CEvent* event)
     auto it = listQuests.begin();
     advance(it, choose-1);
     (*it)->printQuest();
+    */
 }
 
 /**
@@ -174,6 +184,7 @@ void CEventhandler::echo_showActiveQuests(CEvent* event)
 */
 void CEventhandler::echo_showSolvedQuests(CEvent* event)
 {
+    /*
     //Get list of players quests
     std::list<CQuest*> listQuests = event->getGame()->getPlayer().getQuests();
 
@@ -212,6 +223,7 @@ void CEventhandler::echo_showSolvedQuests(CEvent* event)
     auto it = listQuests.begin();
     advance(it, choose-1);
     (*it)->printQuest();
+    */
 }
 
 
@@ -223,6 +235,7 @@ void CEventhandler::echo_showSolvedQuests(CEvent* event)
 */
 void CEventhandler::echo_endGame(CEvent* event)
 {
+    /*
     std::cout << "Willst du wirklich das Spiel verlassen?\n";
     std::cout << "> ";
     
@@ -239,6 +252,7 @@ void CEventhandler::echo_endGame(CEvent* event)
 
     else
         std::cout << "Dann noch viel Spaß!\n\n";
+    */
 }
 
 /**
@@ -248,10 +262,12 @@ void CEventhandler::echo_endGame(CEvent* event)
 */
 void CEventhandler::echo_endGameDirectly(CEvent* event)
 {
+    /*
     std::cout << "Thank you for playing!\n";
 
     //set CGame::m_gameEnd to true 
     event->getGame()->setEndGame(true);
+    */
 }
 
 
@@ -274,6 +290,7 @@ void CEventhandler::echo_falseInput(CEvent* event)
 // **** factory/parsenDialog.json **** //
 void CEventhandler::echo_parsenDialogAnna(CEvent* event)
 {
+    /*
     CGame* game = event->getGame();
 
     //Add quests to players list of quests
@@ -282,6 +299,7 @@ void CEventhandler::echo_parsenDialogAnna(CEvent* event)
 
     //Change dialog of Jay.
     game->getMapChars().at("jay")->setDialog(game->dialogFactory("factory/Dialogs/jayDialog.json"));
+    */
 }
 
     

@@ -91,7 +91,7 @@ CRoom* CRoom::changeRoom(std::string sRoom, std::map<std::string, CRoom*> mapRoo
     {
         if(function.in(sRoom, it->second->getTake()) == true)
         {
-            printDescription(it->second);
+            mapRooms[it->second->getLinkedRoom()]->printDescription(it->second);
             return mapRooms[it->second->getLinkedRoom()];
         }
     }

@@ -61,7 +61,7 @@ void CGame::play()
         //Parse command into event
         CEvent* event = parser.parseCommand(sInput); 
 
-        eventmanager.throw_event(event);
+        eventmanager.throw_event(event->getEventType(), event->getIdentifier());
         
         //Throw event
         for(auto it=m_Player.getEventmanagers().begin(); it!=m_Player.getEventmanagers().end(); it++)

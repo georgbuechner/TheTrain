@@ -12,7 +12,6 @@
 
 //Forward declarations 
 class CEventhandler;
-class CGame;
 
 #include <iostream>
 #include <string>
@@ -27,7 +26,6 @@ private:
    
     //Attributes
     std::map<std::string, std::list<CEventhandler*>*> m_mapHandlers;   //Map with eventhandlers
-    CGame* m_game;
 
     static std::map<std::string, CEventmanager*> m_mapEMs;      //Map of all eventmanagers
 
@@ -35,11 +33,9 @@ public:
     /**
     * Constructor
     */
-    CEventmanager(CGame* game) {
-        m_game = game;
-    }
+    CEventmanager() {}
 
-    static void initializeManagers(CGame* game);
+    static void initializeManagers();
 
     std::map<std::string, CEventmanager*>& getStaticManagers() {
         return m_mapEMs;

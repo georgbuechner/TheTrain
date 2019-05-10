@@ -17,10 +17,6 @@
 #include <iostream>
 #include <map>
 #include <string>
-#include "CGame.hpp"
-
-//Forward declarations
-class CGame;
 
 class CEvent
 {
@@ -30,8 +26,6 @@ private:
     std::string m_sEventType;   //Indicating event type. F.e. "takeItem", "changeRoom"
     std::string m_sIdentifier;  //Identifier adding information to the event type, f.e. which item has
                                 //been taken or which room does the player want to change to.
-
-    CGame* m_game;              //Pointer to the game/ context
 
 public:
     /**
@@ -56,20 +50,6 @@ public:
     */
     std::string getIdentifier();
 
-    /**
-    * getGame: get pointer to the game/ context.
-    * @return CGame* (Pointer to the game/ context)
-    */
-    CGame* getGame();
-
-    
-    // ** setter ** //
-
-    /**
-    * setGame: set game/ current context.
-    * @parameter Cgame* (pointer to game/ context) 
-    */
-    void setGame(CGame* game);
 };
 
 #endif

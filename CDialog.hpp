@@ -8,18 +8,16 @@
 #ifndef CDIALOG_H
 #define CDIALOG_H
 
+//Forward declarations
+class CDialogState;
+class CDialogOptionState;
+
 #include <iostream>
 #include <string>
 #include <map>
 #include "CDialogState.hpp"
 #include "CDialogOptionState.hpp"
 #include "CEventmanager.hpp"
-
-//Forward declarations
-class CDialogState;
-class CDialogOptionState;
-class CEventmanager;
-class CPlayer;
 
 
 class CDialog
@@ -53,7 +51,7 @@ public:
     /**
     * startDialog: function starting and running dialog
     */
-    void startDialog(CPlayer& player);
+    void startDialog();
 
     bool is_number(const std::string& s);
 

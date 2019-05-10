@@ -19,8 +19,8 @@
 #include <map>
 #include <string>
 #include <string.h>
-#include "CGame.hpp"
 #include "CFunctions.h"
+#include "CEvent.hpp"
 
 //Forward declarations
 class CEvent;
