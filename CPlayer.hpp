@@ -69,10 +69,43 @@ public:
     */ 
     void setCurRoom(CRoom* newRoom);
 
+
+    // *** player function *** //
+
+    /**
+    * handler: showExits: show all exits in a room.
+    * Eventtype: "showExits"
+    * @parameter string (Identifier of event thrown)
+    */
     void showExits(std::string sEvent);
 
+    /**
+    * handler: changeRoom: change room to selected room.
+    * Eventtype: "changeRoom"
+    * @parameter string (Identifier of event thrown: selected exit)
+    */
     void changeRoom(std::map<std::string, CRoom*> mapRooms, std::string sEvent);
-    
+
+    /**
+    * handler: showChars: print all characters in current room
+    * Eventtype: "showChars"
+    * @parameter string (Identifier of event thrown)
+    */
+    void showChars(std::string sEvent);
+
+    /**
+    * handler: talkTo: call dialog of selected character
+    * Eventtype: "talkTo"
+    * @parameter sting (Identifier of event thrown: selected character)
+    */
+    void talkTo(std::map<std::string, CCharacter*> mapChars, std::string sEvent);
+
+    /**
+    * handler: showActiveQuests: show all active quests.
+    * EventType: "showActiveQuests"
+    * @parameter CEvent* (pointer to event thrown)
+    */
+    void showQuests(std::string sEvent);
 };
 
 #endif

@@ -68,10 +68,13 @@ void CRoom::printDescription(CExit* exit)
     std::cout << "\n";
 }
 
-void CRoom::showExits() {
+/**
+* showExits: show all exits in a room.
+*/
+void CRoom::showExits() 
+{
     //Attributes
     size_t counter = 1;
-
     
     //Iterate over map of exits in room and print name. Add a number infront of exit
     std::cout << "Exits: \n";
@@ -84,6 +87,12 @@ void CRoom::showExits() {
     std::cout << "\n";
 }
 
+/**
+* changeRoom: return selected room if exists and print description of room changed into
+* @parameter std::string (selected room)
+* @parameter map<string, CRoom*> (map of all rooms)
+* @return CRoom* (return selected room)
+*/
 CRoom* CRoom::changeRoom(std::string sRoom, std::map<std::string, CRoom*> mapRooms)
 {
     CFunctions function;
@@ -99,4 +108,38 @@ CRoom* CRoom::changeRoom(std::string sRoom, std::map<std::string, CRoom*> mapRoo
     return NULL;
 }
 
+/**
+* showChars: print all characters in current room
+*/
+void CRoom::showChars()
+{
+    //Attributes
+    size_t counter = 0;
+            
+    //Iterate over map of characters in room and print name. Add a number infront of each character 
+    std::cout << "People in the room: \n";
+    for(auto it=m_mapOfCharacters.begin(); it!=m_mapOfCharacters.end(); it++)
+    {
+        counter++;
+        std::cout << counter << ": " << it->second << ".\n";
+    }
+
+    std::cout << "\n";
+}
+
+/**
+* getChar: return selected character if exits 
+* @parameter string (selected character)
+*/
+CCharacter* CRoom::getChar(std::string sChar, std::map<std::string, CCharacter*> mapChars)
+{
+    CFunctions function;
+    for(auto it=m_mapOfCharacters.begin(); it!=m_mapOfCharacters.end(); it++)
+    {
+        if(function.in(sChar, mapChars[it->first]->getTake()) == true)
+            return mapChars[it->first];
+    }
+
+    return NULL;
+}
 

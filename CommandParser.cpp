@@ -56,13 +56,13 @@ CEvent* CCommandParser::parseCommand(std::string sInput)
 
     //Show active quests
     if(std::regex_match(sInput, m, showActive)) {
-        CEvent* event = new CEvent("showActiveQuests", "");
+        CEvent* event = new CEvent("showQuests", "");
         return event;
     }
 
     //Show solved quests
     if(std::regex_match(sInput, m, showSolved)) {
-        CEvent* event = new CEvent("showSolvedQuests", "");
+        CEvent* event = new CEvent("showQuests", "");
         return event;
     }
 

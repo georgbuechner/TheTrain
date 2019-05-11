@@ -176,6 +176,23 @@ public:
     * @return list<CQuestStep*> (list with all quest-steps)
     */
     std::map<std::string, CQuestStep*> questStepFactory(std::vector<nlohmann::json> v_steps);
+
+    /**
+    * handler: endGame: Print message for end of game (this might better be moved into CGame::play() )
+    * and set CGame::m_gameEnd to true (this causes main loop in CGame::play() function to break)
+    * Eventtype: "endGame"
+    * @parameter string (Identifier of event thrown)
+    */
+    void endGame(std::string sEvent);
+
+    /**
+    * handler: endGameDirectly: End game without asking
+    * Eventtype: "endGameDirectly"
+    * @parameter CEvent* (pointer to event thrown)
+    */
+    void endGameDirectly(std::string sEvent);
+
+
 };
    
 #endif

@@ -48,6 +48,11 @@ void CGame::play()
     using namespace std::placeholders; 
     eventmanager.add_listener("showExits", bind(&CPlayer::showExits, &m_Player, _1));
     eventmanager.add_listener("changeRoom", bind(&CPlayer::changeRoom, &m_Player, m_mapAllRooms, _1));
+    eventmanager.add_listener("showChars", bind(&CPlayer::showChars, &m_Player, _1));
+    eventmanager.add_listener("talkTo", bind(&CPlayer::talkTo, &m_Player, m_mapAllChars, _1));
+    eventmanager.add_listener("showQuests", bind(&CPlayer::showQuests, &m_Player, _1));
+    eventmanager.add_listener("endGame", bind(&CGame::endGame, this, _1));
+    eventmanager.add_listener("endGameDirectly", bind(&CGame::endGameDirectly, this, _1));
 
     //Main loop: here player can talk to characters, change room and so on
     std::string sInput;
@@ -72,6 +77,40 @@ void CGame::play()
 
     }while(m_gameEnd == false);
 
+    std::cout << "Thank you for playing!\n";
 }
 
+
+/**
+* handler: endGame: Print message for end of game (this might better be moved into CGame::play() )
+* and set CGame::m_gameEnd to true (this causes main loop in CGame::play() function to break)
+* Eventtype: "endGame"
+* @parameter string (Identifier of event thrown)
+*/
+void CGame::endGame(std::string sEvent)
+{
+    std::cout << "Willst du wirklich das Spiel verlassen?\n";
+    std::cout << "> ";
+    
+    std::string sInput;
+    getline(cin, sInput);
+    std::regex ja("(j|((J|j)a))");
+    if(regex_match(sInput, ja))
+    { 
+
+        m_gameEnd = true; 
+    }
+
+    else
+        std::cout << "Dann noch viel Spaß!\n\n";
+}
+
+/**
+* handler: endGameDirectly: End game without asking
+* Eventtype: "endGameDirectly"
+* @parameter CEvent* (pointer to event thrown)
+*/
+void CGame::endGameDirectly(std::string sEvent) {
+    m_gameEnd = true;
+}
 
