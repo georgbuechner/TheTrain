@@ -20,9 +20,9 @@ public:
 
     /**
     * iequals: compare two string and ignore case.
-    * @parameter string (string a)
-    * @parameter string (string b)
-    * @return bool (true if strings are equal, false if not)
+    * @param[in] string a
+    * @param[in] string b
+    * @return true if strings are equal, false if not
     */
     bool iequals(const char* a, const char* b);
 
